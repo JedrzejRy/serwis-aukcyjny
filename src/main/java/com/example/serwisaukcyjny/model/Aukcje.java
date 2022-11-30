@@ -2,6 +2,7 @@ package com.example.serwisaukcyjny.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @Entity
 @Table(name = "auctions")
+@NoArgsConstructor
 public class Aukcje {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,8 +57,7 @@ public class Aukcje {
         this.localization = localization;
     }
 
-    public Aukcje() {
-    }
+
 }
 
 
