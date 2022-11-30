@@ -1,5 +1,4 @@
 package com.example.serwisaukcyjny.model;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,4 +25,4 @@ public class Localization {
         this.city = city;
         this.voivodeship = voivodeship;
     }
-}
+

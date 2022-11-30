@@ -1,5 +1,4 @@
 package com.example.serwisaukcyjny.model;
-
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,4 +19,4 @@ public class Category {
         this.id = id;
         this.categoryName = categoryName;
     }
-}
+
