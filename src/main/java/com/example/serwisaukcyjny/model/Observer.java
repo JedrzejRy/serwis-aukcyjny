@@ -1,4 +1,5 @@
 package com.example.serwisaukcyjny.model;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,15 +9,18 @@ import lombok.ToString;
 @Getter
 @ToString
 @NoArgsConstructor
-public class Category {
+public class Observer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false)
-    private String categoryName;
+    private int auctionId;
+    @Column(nullable = false)
+    private int userId;
 
-    public Category(int id, String categoryName) {
+    public Observer(int id, int auctionId, int userId) {
         this.id = id;
-        this.categoryName = categoryName;
+        this.auctionId = auctionId;
+        this.userId = userId;
     }
-
+}

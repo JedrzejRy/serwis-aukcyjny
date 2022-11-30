@@ -1,28 +1,33 @@
 package com.example.serwisaukcyjny.model;
+
+
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.math.BigDecimal;
+
 @Entity
 @Getter
 @ToString
 @NoArgsConstructor
-public class Localization {
+public class Bidding {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false)
-    private String address;
+    private int auctionId;
     @Column(nullable = false)
-    private String city;
+    private int userId;
     @Column(nullable = false)
-    private String voivodeship;
+    private BigDecimal price;
 
-    public Localization(int id, String address, String city, String voivodeship) {
+    public Bidding(int id, int auctionId, int userId, BigDecimal price) {
         this.id = id;
-        this.address = address;
-        this.city = city;
-        this.voivodeship = voivodeship;
+        this.auctionId = auctionId;
+        this.userId = userId;
+        this.price = price;
     }
-
+}
