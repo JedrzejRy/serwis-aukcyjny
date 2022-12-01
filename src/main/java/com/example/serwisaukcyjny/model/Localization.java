@@ -25,4 +25,5 @@ public class Localization {
         this.city = city;
         this.voivodeship = voivodeship;
     }
+}
 
