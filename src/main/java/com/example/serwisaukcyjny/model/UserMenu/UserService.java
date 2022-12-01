@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -20,8 +19,8 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     ObjectMapper objectMapper;
-    @Autowired
-    BCryptPasswordEncoder encoder;
+  //  @Autowired
+    // BCryptPasswordEncoder encoder;
 
 
     @GetMapping
@@ -37,7 +36,7 @@ public class UserService {
             return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).build();
         }
         User add = userRepository.save(user);
-        user.setPassword(encoder.encode(user.getPassword()));
+       // user.setPassword(encoder.encode(user.getPassword()));
         return ResponseEntity.ok(add);
     }
 
@@ -58,7 +57,8 @@ public class UserService {
         if (user.getLocalization() == null){
             user.setLocalization(current.get().getLocalization());
         } else {
-            user.setPassword(encoder.encode(user.getPassword()));
+           // user.setPassword(encoder.encode(user.getPassword()));
+            user.getPassword();
         }
         return userRepository.save(user);
     }
