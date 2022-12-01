@@ -20,9 +20,9 @@ public class User {
     private int id;
     @NonNull
     private String login;
-    @Column(name = "user_name")
+    @Column
     @NonNull
-    private String username;
+    private String userName;
     @NonNull
     private String password;
     @NonNull
@@ -32,6 +32,7 @@ public class User {
     @NonNull
     private Type type;
     @NonNull
+    @OneToOne
     private Localization localization;
 
 
