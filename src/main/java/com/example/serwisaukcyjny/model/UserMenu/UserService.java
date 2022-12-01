@@ -12,8 +12,8 @@ public class UserService {
     UserRepository userRepository;
     @Autowired
     ObjectMapper objectMapper;
-    @Autowired
-    BCryptPasswordEncoder encoder;
+    //@Autowired
+    //BCryptPasswordEncoder encoder;
 
 
 

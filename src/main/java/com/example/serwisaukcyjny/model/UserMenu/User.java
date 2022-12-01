@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
 import java.time.LocalDate;
 
 @Getter
@@ -27,8 +28,8 @@ public class User {
     private String password;
     @NonNull
     private LocalDate startDate;
-    @Column
-    private ImageIO logo;
+    //@Column
+    //private ImageReader logo;
     @NonNull
     private Type type;
     @NonNull
