@@ -1,10 +1,11 @@
 package com.example.serwisaukcyjny.model.UserMenu;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.example.serwisaukcyjny.model.Localization;
+import jakarta.persistence.*;
 import lombok.*;
+
+import javax.imageio.ImageIO;
+import java.time.LocalDate;
 
 @Getter
 @Setter
@@ -18,9 +19,21 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NonNull
-    private String email;
+    private String login;
+    @Column(name = "user_name")
     @NonNull
     private String username;
     @NonNull
     private String password;
+    @NonNull
+    private LocalDate startDate;
+    @Column
+    private ImageIO logo;
+    @NonNull
+    private Type type;
+    @NonNull
+    private Localization localization;
+
+
+
 }
