@@ -11,28 +11,26 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-@Table(name = "auctions")
 @NoArgsConstructor
-public class Aukcje {
+public class Auction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private int auctionId;
-    @Column
+    @Column(nullable = false)
     private String title;
-    @Column
+    @Column(nullable = false)
     private String description;
-    @Column(name = "minimum_price")
+    @Column(nullable = false)
     private BigDecimal minimumPrice;
-    @Column(name = "buy_now_price")
+    @Column(nullable = false)
     private BigDecimal buyNowPrice;
-    @Column(name = "promotion")
+    @Column(nullable = false)
     private boolean promotion;
-    @Column(name = "date_of_issue")
+    @Column(nullable = false)
     private LocalDateTime dateOfIssue;
-    @Column(name = "end_date")
+    @Column(nullable = false)
     private LocalDateTime endDate;
-    @Column(name = "views")
+    @Column(nullable = false)
     private int views;
 
     @ManyToOne
@@ -42,7 +40,7 @@ public class Aukcje {
     @ManyToOne
     Localization localization;
 
-    public Aukcje(int auctionId, String title, String description, BigDecimal minimumPrice, BigDecimal buyNowPrice, boolean promotion, LocalDateTime dateOfIssue, LocalDateTime endDate, int views, Category category, User user, Localization localization) {
+    public Auction(int auctionId, String title, String description, BigDecimal minimumPrice, BigDecimal buyNowPrice, boolean promotion, LocalDateTime dateOfIssue, LocalDateTime endDate, int views, Category category, User user, Localization localization) {
         this.auctionId = auctionId;
         this.title = title;
         this.description = description;
