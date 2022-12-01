@@ -5,11 +5,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 
+@Entity
 @Getter
 @Setter
-@Entity
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -27,8 +28,8 @@ public class User {
     private String password;
     @NonNull
     private LocalDate startDate;
-    @Column
-    private ImageIO logo;
+  //  @Column
+  //  private ImageIO logo;
     @NonNull
     private Type type;
     @NonNull
