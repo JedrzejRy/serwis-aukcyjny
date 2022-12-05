@@ -19,8 +19,7 @@ public class Localization {
     @Column(nullable = false)
     private String voivodeship;
 
-    public Localization(int id, String address, String city, String voivodeship) {
-        this.id = id;
+    public Localization(String address, String city, String voivodeship) {
         this.address = address;
         this.city = city;
         this.voivodeship = voivodeship;

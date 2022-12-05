@@ -20,8 +20,7 @@ public class Comment {
     @Column(nullable = false)
     private String comment;
 
-    public Comment(int id, int purchaseId, int userId, String comment) {
-        this.id = id;
+    public Comment(int purchaseId, int userId, String comment) {
         this.purchaseId = purchaseId;
         this.userId = userId;
         this.comment = comment;

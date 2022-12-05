@@ -2,6 +2,7 @@ package com.example.serwisaukcyjny.model;
 
 
 
+import com.example.serwisaukcyjny.model.UserMenu.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,16 +19,15 @@ public class Bidding {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false)
-    private int auctionId;
-    @Column(nullable = false)
-    private int userId;
-    @Column(nullable = false)
     private BigDecimal price;
 
-    public Bidding(int id, int auctionId, int userId, BigDecimal price) {
-        this.id = id;
-        this.auctionId = auctionId;
-        this.userId = userId;
+    @OneToOne
+    Auction auctionID;
+
+    @OneToOne
+    User userId;
+
+    public Bidding(int auctionId, int userId, BigDecimal price) {
         this.price = price;
     }
 }

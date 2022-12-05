@@ -5,13 +5,14 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
-@Setter
 @Entity
+@ToString
 @NoArgsConstructor
 public class Auction {
     @Id
@@ -41,8 +42,7 @@ public class Auction {
     @ManyToOne
     Localization localization;
 
-    public Auction(int auctionId, String title, String description, BigDecimal minimumPrice, BigDecimal buyNowPrice, boolean promotion, LocalDateTime dateOfIssue, LocalDateTime endDate, int views, Category category, User user, Localization localization) {
-        this.auctionId = auctionId;
+    public Auction(String title, String description, BigDecimal minimumPrice, BigDecimal buyNowPrice, boolean promotion, LocalDateTime dateOfIssue, LocalDateTime endDate, int views, Category category, User user, Localization localization) {
         this.title = title;
         this.description = description;
         this.minimumPrice = minimumPrice;

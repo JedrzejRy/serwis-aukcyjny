@@ -15,8 +15,7 @@ public class Category {
     @Column(nullable = false)
     private String categoryName;
 
-    public Category(int id, String categoryName) {
-        this.id = id;
+    public Category(String categoryName) {
         this.categoryName = categoryName;
     }
 }
