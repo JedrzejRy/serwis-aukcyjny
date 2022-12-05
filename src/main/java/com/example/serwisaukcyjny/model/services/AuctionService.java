@@ -13,7 +13,7 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor
 public class AuctionService {
 
-    AuctionRepository auctionRepository;
+    private final AuctionRepository auctionRepository;
 
     public List<Auction> findAll() {
         return StreamSupport.stream(auctionRepository.findAll().spliterator(), false)
