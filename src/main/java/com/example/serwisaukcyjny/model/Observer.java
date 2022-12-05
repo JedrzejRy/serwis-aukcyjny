@@ -18,8 +18,7 @@ public class Observer {
     @Column(nullable = false)
     private int userId;
 
-    public Observer(int id, int auctionId, int userId) {
-        this.id = id;
+    public Observer(int auctionId, int userId) {
         this.auctionId = auctionId;
         this.userId = userId;
     }

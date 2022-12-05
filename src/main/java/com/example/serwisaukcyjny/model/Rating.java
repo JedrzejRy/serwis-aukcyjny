@@ -14,17 +14,16 @@ public class Rating {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(nullable = false)
-    private int purchaseId;
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RatingScore buyerRatingScore;
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private RatingScore sellerRatingScore;
 
-    public Rating(int id, int purchaseId, RatingScore buyerRatingScore, RatingScore sellerRatingScore) {
-        this.id = id;
-        this.purchaseId = purchaseId;
+    @OneToOne
+    Purchase purchaseId;
+
+    public Rating(RatingScore buyerRatingScore, RatingScore sellerRatingScore) {
         this.buyerRatingScore = buyerRatingScore;
         this.sellerRatingScore = sellerRatingScore;
     }
