@@ -2,6 +2,8 @@ package com.example.serwisaukcyjny.controller;
 
 import com.example.serwisaukcyjny.form.CreateAuctionForm;
 import com.example.serwisaukcyjny.mapper.AuctionMapper;
+import com.example.serwisaukcyjny.model.Category;
+import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.services.AuctionService;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
@@ -23,17 +25,20 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class AuctionController {
 
     private final AuctionService auctionService;
+    private final CategoryRepository categoryRepository;
 
     @GetMapping
     public String create(ModelMap map) {
     map.addAttribute("auction", new CreateAuctionForm());
+    map.addAttribute("categories",categoryRepository.findAll());
     return "creator";
     }
 
     @PostMapping
-    public String handleCreate(@ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, RedirectAttributes redirectAttributes) {
+    public String handleCreate(@ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
         log.info("Creating auction from form: {}", form);
         if (errors.hasErrors()) {
+            map.addAttribute("categories", categoryRepository.findAll());
             return "creator";
         }
         auctionService.save(AuctionMapper.toEntity(form));

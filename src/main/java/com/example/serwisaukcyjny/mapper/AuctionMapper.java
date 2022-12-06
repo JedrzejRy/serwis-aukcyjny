@@ -21,7 +21,7 @@ public class AuctionMapper {
                 LocalDateTime.now(),
                 LocalDateTime.of(2023, Month.JANUARY, 11, 11, 11),
                 0,
-                null,
+                form.getCategory(),
                 null,
                 null);
     }

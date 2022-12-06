@@ -1,5 +1,6 @@
 package com.example.serwisaukcyjny.form;
 
+import com.example.serwisaukcyjny.model.Category;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
@@ -24,5 +25,6 @@ public class CreateAuctionForm {
     private LocalDateTime dateOfIssue;
     private LocalDateTime endDate;
     private int views;
+    private Category category;
 
 }

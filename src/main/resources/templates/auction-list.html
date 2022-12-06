@@ -60,6 +60,7 @@
       <th>Opis</th>
       <th>Cena minimalna</th>
       <th>Cena kup teraz</th>
+      <th>Kategoria</th>
       <th>Promowany</th>
       <th>Data wystawiena</th>
       <th>Data zakończenia</th>
@@ -73,6 +74,7 @@
       <td th:text="${auction.description}"></td>
       <td th:text="${auction.minimumPrice}"></td>
       <td th:text="${auction.buyNowPrice}"></td>
+      <td th:text="${auction.category.categoryName}"></td>
       <td th:text="${auction.promotion}"></td>
       <td th:text="${auction.dateOfIssue}"></td>
       <td th:text="${auction.endDate}"></td>
