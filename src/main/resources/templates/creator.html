@@ -79,6 +79,12 @@
                     class="invalid-feedback-custom">
             </div>
         </div>
+        <div class="mb-3">
+            <label for="category" class="form-label">Kategoria:</label>
+            <select id="category" th:field="*{category}" class="form-control">
+                <option th:each="categoryOption : ${categories}" th:value="${categoryOption.id}" th:text="${categoryOption.getCategoryName()}"></option>
+            </select>
+        </div>
         <div class="form-check">
             <label class="form-check-label" for="promotion">Promowanie</label>
             <input class="form-check-input" type="checkbox" id="promotion" th:field="*{promotion}">

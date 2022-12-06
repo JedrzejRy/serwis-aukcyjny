@@ -23,7 +23,6 @@ public class CategoryRepositoryService implements CommandLineRunner {
         categoryRepository.save(new Category("Zdrowie"));
         categoryRepository.save(new Category("Kultura i rozrywka"));
         categoryRepository.save(new Category("Sport i turystyka"));
-        categoryRepository.save(new Category("Sport i turystyka"));
         categoryRepository.save(new Category("Motoryzacja"));
         categoryRepository.save(new Category("Nieruchomości"));
         categoryRepository.save(new Category("Kolekcje i sztuka"));
