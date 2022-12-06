@@ -7,6 +7,42 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home">Serwis Aukcyjny</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/home">Strona Główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/auction/list">Aukcje</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/home" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Kategorie
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#" th:each="category : ${categories}" th:text="${category.categoryName}"></a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/register">Rejestracja</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/auction">Nowa aukcja</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Szukaj</button>
+            </form>
+        </div>
+    </div>
+</nav>
 <body>
 <div class="container">
     <form th:object="${user}" th:action="@{/home/register}" method="post">
