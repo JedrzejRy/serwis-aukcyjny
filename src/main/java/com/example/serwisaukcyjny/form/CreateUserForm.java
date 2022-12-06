@@ -1,5 +1,6 @@
 package com.example.serwisaukcyjny.form;
 
+import com.example.serwisaukcyjny.model.Localization;
 import com.example.serwisaukcyjny.model.UserMenu.Type;
 import com.example.serwisaukcyjny.model.UserMenu.User;
 import jakarta.validation.constraints.Email;
@@ -9,17 +10,21 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @ToString
 public class CreateUserForm {
-    private String firstName;
-    private String lastName;
-    @NotBlank(message = "Pole nie może być puste")
-    @Email (message = "Login powinien być poprawnym formatem adresu email")
+
+
     private String login;
-    @Size(min = 8, message = "Minimalna liczba znaków: 8")
-    @NotBlank(message = "Pole nie może być puste")
+    private String userName;
     private String password;
+    private LocalDateTime startDate;
     private Type type;
+    private Localization localization;
+
+
 }

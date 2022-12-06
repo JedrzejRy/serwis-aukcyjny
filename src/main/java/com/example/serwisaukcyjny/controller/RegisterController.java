@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 @Slf4j
 @RequiredArgsConstructor
-@RequestMapping()
+@RequestMapping("/home/register")
 public class RegisterController {
 
     private static final String MESSAGE_KEY = "message";
@@ -28,7 +28,7 @@ public class RegisterController {
     @GetMapping
     public String register(ModelMap map) {
         map.addAttribute("user", new CreateUserForm());
-        map.addAttribute("type", Type.values());
+        map.addAttribute("types", Type.values());
         return "registered";
     }
 
@@ -36,11 +36,20 @@ public class RegisterController {
     public String handleCreate(@ModelAttribute("user") @Valid CreateUserForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
         log.info("Creating user from form{}", form);
         if (errors.hasErrors()) {
+            map.addAttribute("types", Type.values());
             return "registered";
         }
-        userService.addUser(UserMapper.toEntity(form));
+        userService.save(UserMapper.toEntity(form));
         redirectAttributes.addAttribute(MESSAGE_KEY, "Konto zostało pomyślnie utworzone!");
-        return "redirect:/home/user/list";
+        return "redirect:/home/register/userList";
     }
 
+    @GetMapping("/userList")
+    public String userList(ModelMap map, @ModelAttribute("message") String message) {
+        map.addAttribute("users", userService.findAll());
+        if (!message.isBlank()) {
+            map.addAttribute("message", message);
+        }
+        return "user-list";
+    }
 }
