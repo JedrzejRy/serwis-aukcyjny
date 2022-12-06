@@ -1,12 +1,13 @@
-package com.example.serwisaukcyjny.model.UserMenu;
+package com.example.serwisaukcyjny.model.services;
 
+import com.example.serwisaukcyjny.model.UserMenu.User;
+import com.example.serwisaukcyjny.model.repositories.UserRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.*;
 
