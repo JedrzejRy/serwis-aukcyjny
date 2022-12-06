@@ -4,8 +4,6 @@ import com.example.serwisaukcyjny.model.Localization;
 import jakarta.persistence.*;
 import lombok.*;
 
-import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.time.LocalDate;
 
 @Entity
@@ -16,6 +14,13 @@ import java.time.LocalDate;
 @ToString
 @RequiredArgsConstructor
 public class User {
+    public User(String login, String userName, String password, String startDate, Type type){
+        this.login = login;
+        this.userName = userName;
+        this.password = password;
+        this.startDate = LocalDate.parse(startDate);
+        this.type = type;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -31,6 +36,7 @@ public class User {
   //  @Column
   //  private ImageIO logo;
     @NonNull
+    @Enumerated(EnumType.STRING)
     private Type type;
     @NonNull
     @OneToOne
