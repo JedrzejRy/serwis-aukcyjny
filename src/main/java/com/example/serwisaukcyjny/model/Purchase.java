@@ -1,9 +1,11 @@
 package com.example.serwisaukcyjny.model;
 
 
+import com.example.serwisaukcyjny.model.UserMenu.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.ToString;
 
 import java.math.BigDecimal;
@@ -16,16 +18,19 @@ public class Purchase {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false)
-    private int auctionId;
-    @Column(nullable = false)
-    private int userId;
+    @NonNull
+    @OneToOne
+    private Auction auction;
+    @NonNull
+    @OneToOne
+    private User user;
     @Column(nullable = false)
     private BigDecimal price;
 
-    public Purchase(int auctionId, int userId, BigDecimal price) {
-        this.auctionId = auctionId;
-        this.userId = userId;
+    public Purchase(int id, @NonNull Auction auction, User user, BigDecimal price) {
+        this.id = id;
+        this.auction = auction;
+        this.user = user;
         this.price = price;
     }
 }
