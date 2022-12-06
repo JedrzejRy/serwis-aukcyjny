@@ -4,41 +4,43 @@ import com.example.serwisaukcyjny.model.Localization;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString
-@RequiredArgsConstructor
 public class User {
-    public User(String login, String userName, String password, String startDate, Type type){
+
+    public User( String login, String userName, String password, LocalDateTime startDate, Type type, Localization localization) {
+
         this.login = login;
         this.userName = userName;
         this.password = password;
-        this.startDate = LocalDate.parse(startDate);
+        this.startDate = startDate;
         this.type = type;
+        this.localization = localization;
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @NonNull
+
     private String login;
     @Column
-    @NonNull
+
     private String userName;
-    @NonNull
+
     private String password;
-    @NonNull
-    private LocalDate startDate;
-  //  @Column
-  //  private ImageIO logo;
-    @NonNull
+
+    private LocalDateTime startDate;
+    //  @Column
+    //  private ImageIO logo;
+
     @Enumerated(EnumType.STRING)
     private Type type;
-    @NonNull
+
     @OneToOne
     private Localization localization;
 

@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <title>User List</title>
-  <link rel="stylesheet" href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/styles.css">
-  <script src="/webjars/bootstrap/5.2.2/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
+  <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -18,28 +18,25 @@
   <table class="table table-striped">
     <thead>
     <tr>
-      <th>ID</th>
-      <th>Imię</th>
-      <th>Nazwisko</th>
       <th>Login</th>
+      <th>Użytkonik</th>
+      <th>Data założenia</th>
+      <th>Typ konta</th>
       <th></th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="user : ${users}">
-      <td th:text="${user.id}"></td>
-      <td th:text="${user.firstName}"></td>
-      <td th:text="${user.lastName}"></td>
       <td th:text="${user.login}"></td>
-      <td>
-        <a class="btn btn-success" th:href="@{/mvc/user/update/__${user.id}__}" role="button" target="_parent">Aktualizuj</a>
-        <a class="btn btn-danger" th:href="@{/mvc/user/delete/__${user.id}__}" role="button" target="_parent">Usuń</a>
-      </td>
+      <td th:text="${user.userName}"></td>
+      <td th:text="${user.startDate}"></td>
+      <td th:text="${user.type}"></td>
+
     </tr>
     </tbody>
   </table>
   <div>
-    <a class="btn btn-primary" href="/mvc/user" role="button" target="_parent">Dodaj użytkownika</a>
+    <a class="btn btn-primary" href="/home/register" role="button" target="_parent">Dodaj użytkownika</a>
   </div>
 </div>
 </body>

@@ -3,44 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Rejestracja</title>
-    <link rel="stylesheet" href="/webjars/bootstrap/5.2.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/styles.css">
-    <script src="/webjars/bootstrap/5.2.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
 <body>
 <div class="container">
-    <form th:object="${user}" th:action="@{/mvc/user}" method="post">
-        <div class="mb-3">
-            <label for="firstName" class="form-label">Imię:</label>
-            <input id="firstName" class="form-control" type="text" th:field="*{firstName}" >
-        </div>
-        <div class="mb-3">
-            <label for="lastName" class="form-label">Nazwisko:</label>
-            <input id="lastName" class="form-control" type="text" th:field="*{lastName}">
-        </div>
+    <form th:object="${user}" th:action="@{/home/register}" method="post">
         <div class="mb-3">
             <label for="login" class="form-label">Adres e-mail:</label>
             <input id="login" class="form-control" type="text" th:field="*{login}">
-            <div th:if="${#fields.hasErrors('login')}" th:text="${#fields.errors('login')[0]}" class="invalid-feedback-custom">
-            </div>
         </div>
+        <div class="mb-3">
+            <label for="userName" class="form-label">Użytkownik:</label>
+            <input id="userName" class="form-control" type="text" th:field="*{userName}">
+        </div>
+
+
         <div class="mb-3">
             <label for="password" class="form-label">Hasło:</label>
             <input id="password" class="form-control" type="password" th:field="*{password}">
-            <div
-                    th:if="${#fields.hasErrors('password')}"
-                    th:text="${#fields.errors('password')[0]}"
-                    class="invalid-feedback-custom">
-            </div>
+
         </div>
         <div class="mb-3">
             <label for="type" class="form-label">Rola:</label>
             <select id="type" class="form-control" th:field="*{type}">
-                <option th:each="roleOption : ${type}" th:value="${type}" th:text="${type}"></option>
+                <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
             </select>
         </div>
         <div>
-            <button type="submit" class="btn btn-primary" >Rejestruj</button>
+            <button type="submit" class="btn btn-primary">Rejestruj</button>
         </div>
     </form>
 </div>
