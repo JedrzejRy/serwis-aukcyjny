@@ -50,6 +50,7 @@ public class AuctionController {
     @GetMapping("/list")
     public String list(ModelMap map, @ModelAttribute("message") String message) {
         map.addAttribute("auctions", auctionService.findAll());
+        map.addAttribute("categories",categoryRepository.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
         }
