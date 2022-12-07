@@ -1,6 +1,8 @@
 package com.example.serwisaukcyjny.model.services;
 
+import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.Category;
+import com.example.serwisaukcyjny.model.repositories.AuctionRepository;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Service;
 public class CategoryRepositoryService implements CommandLineRunner {
 
     private final CategoryRepository categoryRepository;
+    private final AuctionRepository auctionRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -28,6 +31,7 @@ public class CategoryRepositoryService implements CommandLineRunner {
         categoryRepository.save(new Category("Kolekcje i sztuka"));
         categoryRepository.save(new Category("Firma i usługi"));
 
-
     }
+
+
 }
