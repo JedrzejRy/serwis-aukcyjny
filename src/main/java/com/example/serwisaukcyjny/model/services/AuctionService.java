@@ -1,6 +1,7 @@
 package com.example.serwisaukcyjny.model.services;
 
 import com.example.serwisaukcyjny.model.Auction;
+import com.example.serwisaukcyjny.model.Category;
 import com.example.serwisaukcyjny.model.repositories.AuctionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,10 @@ public class AuctionService {
 
     public Auction findByID(Long id) {
         return auctionRepository.findById(id).orElseThrow(() -> new RuntimeException("Auction with id " + id + " not found!"));
+    }
+
+    public List<Auction> findAllByCategory (Category category) {
+        return auctionRepository.findAllByCategory(category);
     }
 
 }
