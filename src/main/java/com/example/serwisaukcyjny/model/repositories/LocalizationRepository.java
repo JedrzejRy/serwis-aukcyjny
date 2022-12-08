@@ -11,4 +11,6 @@ public interface LocalizationRepository extends CrudRepository<Localization, Lon
     List<Localization> findByCity(String city);
     List<Localization> findByVoivodeship(String voivodeship);
 
+
+
 }
