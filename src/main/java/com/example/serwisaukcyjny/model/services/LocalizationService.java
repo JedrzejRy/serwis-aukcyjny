@@ -1,6 +1,7 @@
 package com.example.serwisaukcyjny.model.services;
 
 import com.example.serwisaukcyjny.model.Localization;
+import com.example.serwisaukcyjny.model.UserMenu.User;
 import com.example.serwisaukcyjny.model.repositories.LocalizationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -30,5 +31,9 @@ public class LocalizationService {
         return StreamSupport.stream(repository.findByVoivodeship(voivodeship).spliterator(), false)
                 .collect(toList());
     }
+
+    public Localization save(Localization localization) {return repository.save(localization);}
+
+
 
 }

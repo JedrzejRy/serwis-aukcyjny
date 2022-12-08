@@ -44,7 +44,7 @@
     </div>
 </nav>
 <body>
-<div class="container">
+<div class="container"> <!-- Początek formularza rejestracji użytkownika -->
     <form th:object="${user}" th:action="@{/home/register}" method="post">
         <div class="mb-3">
             <label for="login" class="form-label">Adres e-mail:</label>
@@ -70,7 +70,24 @@
         <div>
             <button type="submit" class="btn btn-primary">Rejestruj</button>
         </div>
+
+        <!-- wstawiam lokalizację  -->
+    <form th:object="${localization}" th:action="@{/home/register}" method="post">
+    <div class="mb-3">
+            <label for="type" class="form-label">Podaj województwo:</label>
+            <select id="voivodeship" th:field="*{voivodeship}" class="form-control">
+                <option th:each="value : ${voivodeships}" th:value="${value}" th:text="${value}"></option>
+            </select>
+            <label for="type" class="form-label">Miasto:</label>
+            <input id="miasto" class="form-control" type="text" th:field="*{city}">
+            <label for="type" class="form-label">Adres:</label>
+            <input id="adres" class="form-control" type="text" th:field="*{address}">
+        </div>
+        <div>
+            <button type="submit" class="btn btn-primary">Rejestruj</button>
+        </div>
     </form>
+
 </div>
 </body>
 </html>
