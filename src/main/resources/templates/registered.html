@@ -67,10 +67,6 @@
                 <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
             </select>
         </div>
-        <div>
-            <button type="submit" class="btn btn-primary">Rejestruj</button>
-        </div>
-
         <!-- wstawiam lokalizację  -->
     <form th:object="${localization}" th:action="@{/home/register}" method="post">
     <div class="mb-3">
@@ -87,7 +83,7 @@
             <button type="submit" class="btn btn-primary">Rejestruj</button>
         </div>
     </form>
-
+    </form>
 </div>
 </body>
 </html>
