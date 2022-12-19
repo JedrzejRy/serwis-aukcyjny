@@ -7,6 +7,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
+<body>
 <nav class="navbar navbar-expand-lg bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="/home">Serwis Aukcyjny</a>
@@ -26,7 +27,7 @@
                         Kategorie
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#" th:each="category : ${categories}" th:text="${category.categoryName}"></a></li>
+                        <li><a class="dropdown-item" th:href="@{/home/auction/list/{id}(id=${category.id})}" th:each="category : ${categories}" th:text="${category.categoryName}"></a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
@@ -43,7 +44,7 @@
         </div>
     </div>
 </nav>
-<body>
+
 <div class="container"> <!-- Początek formularza rejestracji użytkownika -->
     <form th:object="${user}" th:action="@{/home/register}" method="post">
         <div class="mb-3">
