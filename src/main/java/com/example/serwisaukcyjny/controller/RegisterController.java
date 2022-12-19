@@ -6,6 +6,7 @@ import com.example.serwisaukcyjny.mapper.LocalizationMapper;
 import com.example.serwisaukcyjny.mapper.UserMapper;
 import com.example.serwisaukcyjny.model.Localization;
 import com.example.serwisaukcyjny.model.UserMenu.Type;
+import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.repositories.LocalizationRepository;
 import com.example.serwisaukcyjny.model.services.LocalizationService;
 import com.example.serwisaukcyjny.model.services.UserService;
@@ -28,6 +29,8 @@ public class RegisterController {
     private final UserService userService;
     private final LocalizationRepository localizationRepository;
     private final LocalizationService localizationService;
+    private final CategoryRepository categoryRepository;
+
 
     @GetMapping
     public String register(ModelMap map) {
@@ -35,6 +38,8 @@ public class RegisterController {
         map.addAttribute("localization", new CreateLocalizationForm());
         map.addAttribute("types", Type.values());
         map.addAttribute("voivodeships", Localization.Voivodeship.values());
+        map.addAttribute("categories", categoryRepository.findAll());
+
         return "registered";
     }
 
