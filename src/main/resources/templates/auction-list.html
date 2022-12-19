@@ -27,7 +27,7 @@
             Kategorie
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#" th:each="category : ${categories}" th:text="${category.categoryName}"></a></li>
+            <li><a class="dropdown-item" th:href="@{/home/auction/list/{id}(id=${category.id})}" th:each="category : ${categories}" th:text="${category.categoryName}"></a></li>
           </ul>
         </li>
         <li class="nav-item">
