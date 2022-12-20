@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +30,16 @@ public class UserService {
 
     public List<User> findAll(){
         return new ArrayList<>(userRepository.findAll());
+    }
+
+    public Optional<User> findById(Long id){
+        return userRepository.findById(id);
+    }
+
+    public Optional<User> findByUserName (String userName){
+
+        return userRepository.findByUserName(userName);
+
     }
 
     @DeleteMapping
