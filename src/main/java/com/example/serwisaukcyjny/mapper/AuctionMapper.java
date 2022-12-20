@@ -2,9 +2,6 @@ package com.example.serwisaukcyjny.mapper;
 
 import com.example.serwisaukcyjny.form.CreateAuctionForm;
 import com.example.serwisaukcyjny.model.Auction;
-import com.example.serwisaukcyjny.model.Category;
-import com.example.serwisaukcyjny.model.Localization;
-import com.example.serwisaukcyjny.model.UserMenu.User;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

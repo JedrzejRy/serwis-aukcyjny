@@ -2,14 +2,11 @@ package com.example.serwisaukcyjny.controller;
 
 import com.example.serwisaukcyjny.form.CreateUserForm;
 import com.example.serwisaukcyjny.mapper.UserMapper;
-import com.example.serwisaukcyjny.model.UserMenu.Type;
-import com.example.serwisaukcyjny.model.UserMenu.User;
+import com.example.serwisaukcyjny.model.Role;
 import com.example.serwisaukcyjny.model.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.Errors;
@@ -28,7 +25,7 @@ public class RegisterController {
     @GetMapping
     public String register(ModelMap map) {
         map.addAttribute("user", new CreateUserForm());
-        map.addAttribute("types", Type.values());
+        map.addAttribute("roles", Role.values());
         return "registered";
     }
 
@@ -36,7 +33,7 @@ public class RegisterController {
     public String handleCreate(@ModelAttribute("user") @Valid CreateUserForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
         log.info("Creating user from form{}", form);
         if (errors.hasErrors()) {
-            map.addAttribute("types", Type.values());
+            map.addAttribute("types", Role.values());
             return "registered";
         }
         userService.save(UserMapper.toEntity(form));

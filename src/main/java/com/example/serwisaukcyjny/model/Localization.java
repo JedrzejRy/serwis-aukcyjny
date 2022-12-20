@@ -23,6 +23,7 @@ public class Localization {
         this.address = address;
         this.city = city;
         this.voivodeship = voivodeship;
-    }}
+    }
+}
 
 

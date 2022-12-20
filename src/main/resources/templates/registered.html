@@ -63,8 +63,8 @@
         </div>
         <div class="mb-3">
             <label for="type" class="form-label">Rola:</label>
-            <select id="type" class="form-control" th:field="*{type}">
-                <option th:each="type : ${types}" th:value="${type}" th:text="${type}"></option>
+            <select id="type" class="form-control" th:field="*{role}">
+                <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
             </select>
         </div>
         <div>
