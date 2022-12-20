@@ -1,7 +1,6 @@
 package com.example.serwisaukcyjny.model;
 
 
-import com.example.serwisaukcyjny.model.UserMenu.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -4,8 +4,8 @@ import com.example.serwisaukcyjny.form.CreateLocalizationForm;
 import com.example.serwisaukcyjny.form.CreateUserForm;
 import com.example.serwisaukcyjny.mapper.LocalizationMapper;
 import com.example.serwisaukcyjny.mapper.UserMapper;
+import com.example.serwisaukcyjny.model.Role;
 import com.example.serwisaukcyjny.model.Localization;
-import com.example.serwisaukcyjny.model.UserMenu.Type;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.repositories.LocalizationRepository;
 import com.example.serwisaukcyjny.model.services.LocalizationService;
@@ -35,8 +35,8 @@ public class RegisterController {
     @GetMapping
     public String register(ModelMap map) {
         map.addAttribute("user", new CreateUserForm());
+        map.addAttribute("roles", Role.values());
         map.addAttribute("localization", new CreateLocalizationForm());
-        map.addAttribute("types", Type.values());
         map.addAttribute("voivodeships", Localization.Voivodeship.values());
         map.addAttribute("categories", categoryRepository.findAll());
 
@@ -47,7 +47,7 @@ public class RegisterController {
     public String handleCreate(@ModelAttribute("user") @Valid CreateUserForm form, @ModelAttribute("localization") @Valid CreateLocalizationForm formLoc, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
 
         if (errors.hasErrors()) {
-            map.addAttribute("types", Type.values());
+            map.addAttribute("types", Role.values());
             map.addAttribute("voivodeships", Localization.Voivodeship.values());
             return "registered";
         }

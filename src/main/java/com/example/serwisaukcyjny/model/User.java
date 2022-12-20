@@ -1,6 +1,5 @@
-package com.example.serwisaukcyjny.model.UserMenu;
+package com.example.serwisaukcyjny.model;
 
-import com.example.serwisaukcyjny.model.Localization;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -13,13 +12,13 @@ import java.time.LocalDateTime;
 @ToString
 public class User {
 
-    public User( String login, String userName, String password, LocalDateTime startDate, Type type, Localization localization) {
+    public User(String login, String userName, String password, LocalDateTime startDate, Role role, Localization localization) {
 
         this.login = login;
         this.userName = userName;
         this.password = password;
         this.startDate = startDate;
-        this.type = type;
+        this.role = role;
         this.localization = localization;
     }
 
@@ -39,7 +38,7 @@ public class User {
     //  private ImageIO logo;
 
     @Enumerated(EnumType.STRING)
-    private Type type;
+    private Role role;
 
     @OneToOne
     private Localization localization;

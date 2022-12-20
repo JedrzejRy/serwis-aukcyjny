@@ -1,7 +1,6 @@
 package com.example.serwisaukcyjny.form;
 
 import com.example.serwisaukcyjny.model.Category;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
