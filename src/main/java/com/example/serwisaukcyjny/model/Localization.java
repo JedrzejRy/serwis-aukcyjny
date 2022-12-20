@@ -17,13 +17,20 @@ public class Localization {
     @Column(nullable = false)
     private String city;
     @Column(nullable = false)
-    private String voivodeship;
+    private Voivodeship voivodeship;
 
-    public Localization(String address, String city, String voivodeship) {
+    public Localization(String address, String city, Voivodeship voivodeship) {
         this.address = address;
         this.city = city;
         this.voivodeship = voivodeship;
     }
+
+    public enum Voivodeship {
+
+MAZOWIECKIE, SLASKIE, POMORSKIE
+
+    }
+
 }
 
 
