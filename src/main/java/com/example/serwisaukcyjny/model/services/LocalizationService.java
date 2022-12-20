@@ -1,7 +1,7 @@
 package com.example.serwisaukcyjny.model.services;
 
 import com.example.serwisaukcyjny.model.Localization;
-import com.example.serwisaukcyjny.model.UserMenu.User;
+import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.LocalizationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

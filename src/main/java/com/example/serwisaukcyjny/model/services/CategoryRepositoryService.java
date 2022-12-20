@@ -2,8 +2,11 @@ package com.example.serwisaukcyjny.model.services;
 
 import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.Category;
+import com.example.serwisaukcyjny.model.Role;
+import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.AuctionRepository;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
+import com.example.serwisaukcyjny.model.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
@@ -13,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class CategoryRepositoryService implements CommandLineRunner {
 
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
     private final AuctionRepository auctionRepository;
 
     @Override
