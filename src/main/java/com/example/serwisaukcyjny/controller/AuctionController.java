@@ -7,6 +7,7 @@ import com.example.serwisaukcyjny.model.Category;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.services.AuctionService;
 import com.example.serwisaukcyjny.model.services.CategoryService;
+import com.example.serwisaukcyjny.model.services.UserService;
 import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -28,6 +30,7 @@ public class AuctionController {
     private final AuctionService auctionService;
     private final CategoryRepository categoryRepository;
     private final CategoryService categoryService;
+    private final UserService userService;
 
     @GetMapping
     public String create(ModelMap map) {
@@ -37,13 +40,13 @@ public class AuctionController {
     }
 
     @PostMapping
-    public String handleCreate(@ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
+    public String handleCreate(@ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map, Principal principal) {
         log.info("Creating auction from form: {}", form);
         if (errors.hasErrors()) {
             map.addAttribute("categories", categoryRepository.findAll());
             return "creator";
         }
-        auctionService.save(AuctionMapper.toEntity(form));
+        auctionService.save(AuctionMapper.toEntity(form, userService.findByUserName(principal.getName()).get()));
         redirectAttributes.addAttribute("message", "Aukcja o tytule " + form.getTitle() + " została pomyślnie dodana!");
 
         return "redirect:/home/auction/list";
