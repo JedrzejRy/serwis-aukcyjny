@@ -1,8 +1,11 @@
 package com.example.serwisaukcyjny.form;
 
 import com.example.serwisaukcyjny.model.Category;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Positive;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -14,6 +17,7 @@ import java.time.LocalDateTime;
 @ToString
 public class CreateAuctionForm {
 
+    @NotBlank (message = "aukcja musi mieć tytuł")
     private String title;
     private String description;
     @Positive(message = "Wartość musi być dodatnia")
@@ -22,8 +26,10 @@ public class CreateAuctionForm {
     private int buyNowPrice;
     private boolean promotion;
     private LocalDateTime dateOfIssue;
+    @Future
     private LocalDateTime endDate;
     private int views;
+    @NonNull
     private Category category;
 
 }
