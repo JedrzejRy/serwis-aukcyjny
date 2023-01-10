@@ -51,8 +51,9 @@ public class RegisterController {
             map.addAttribute("voivodeships", Localization.Voivodeship.values());
             return "registered";
         }
-        userService.save(UserMapper.toEntity(form));
-        localizationService.save(LocalizationMapper.toEntity(formLoc));
+        Localization localization = LocalizationMapper.toEntity(formLoc);
+        localizationService.save(localization);
+        userService.save(UserMapper.toEntity(form, localization));
 
 
         redirectAttributes.addAttribute(MESSAGE_KEY, "Konto zostało pomyślnie utworzone!");

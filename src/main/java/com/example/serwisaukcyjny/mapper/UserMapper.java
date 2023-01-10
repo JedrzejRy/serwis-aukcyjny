@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 
 
 public class UserMapper {
-    public static User toEntity(CreateUserForm form){
-        return new User(form.getLogin(), form.getUserName(), form.getPassword(), LocalDateTime.now(), form.getRole(), null);
+    public static User toEntity(CreateUserForm form, Localization localization){
+        return new User(form.getLogin(), form.getUserName(), form.getPassword(), LocalDateTime.now(), form.getRole(), localization);
     }
 }
