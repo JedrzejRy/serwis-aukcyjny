@@ -21,7 +21,7 @@ public class CategoryRepositoryService implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        categoryRepository.save(new Category("Moda"));
+       /* categoryRepository.save(new Category("Moda"));
         categoryRepository.save(new Category("Elektronika"));
         categoryRepository.save(new Category("Dom i Ogród"));
         categoryRepository.save(new Category("Supermarket"));
@@ -34,7 +34,7 @@ public class CategoryRepositoryService implements CommandLineRunner {
         categoryRepository.save(new Category("Nieruchomości"));
         categoryRepository.save(new Category("Kolekcje i sztuka"));
         categoryRepository.save(new Category("Firma i usługi"));
-
+*/
     }
 
 
