@@ -19,9 +19,9 @@ public class CreateUserForm {
 
     @Email(message = "niepoprawny format email")
     private String login;
-    @NotBlank
+    @NotBlank(message = "uzupełnij nazwę użytkownika")
     private String userName;
-   // @Size(min=6, max=30)
+    @Size(min=6, max=30, message = "hasło musi mieć 6-30 znaków")
     private String password;
     private LocalDateTime startDate;
     private Role role;

@@ -47,9 +47,9 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String handleCreate(@ModelAttribute("user") @Valid CreateUserForm form, @ModelAttribute("localization")  CreateLocalizationForm formLoc, BindingResult result, RedirectAttributes redirectAttributes, ModelMap map) {
+    public String handleCreate(@ModelAttribute("user") @Valid CreateUserForm form, BindingResult userFormBindingResult, @Valid @ModelAttribute("localization")  CreateLocalizationForm formLoc, BindingResult formLocBindingResult, RedirectAttributes redirectAttributes, ModelMap map) {
 
-        if (result.hasErrors()) {
+        if (userFormBindingResult.hasErrors() || formLocBindingResult.hasErrors()) {
             map.addAttribute("types", Role.values());
             map.addAttribute("voivodeships", Localization.Voivodeship.values());
             return "registered";
