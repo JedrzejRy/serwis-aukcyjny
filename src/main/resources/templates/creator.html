@@ -50,6 +50,11 @@
         <div class="mb-3">
             <label for="title" class="form-label">Tytuł:</label>
             <input id="title" type="text" th:field="*{title}" class="form-control"/>
+            <div
+                    th:if="${#fields.hasErrors('title')}"
+                    th:text="${#fields.errors('title')[0]}"
+                    class="invalid-feedback-custom">
+            </div>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">Opis:</label>
