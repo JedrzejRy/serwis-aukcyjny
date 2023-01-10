@@ -49,8 +49,14 @@
     <form th:object="${user}" th:action="@{/home/register}" method="post">
         <div class="mb-3">
             <label for="login" class="form-label">Adres e-mail:</label>
-            <input id="login" class="form-control" type="text" th:field="*{login}">
+            <input id="login" class="form-control" type="text" th:field="*{login}"/>
+            <div
+                    th:if="${#fields.hasErrors('login')}"
+                    th:text="${#fields.errors('login')[0]}"
+                    class="invalid-feedback-custom">
+            </div>
         </div>
+
         <div class="mb-3">
             <label for="userName" class="form-label">Użytkownik:</label>
             <input id="userName" class="form-control" type="text" th:field="*{userName}">

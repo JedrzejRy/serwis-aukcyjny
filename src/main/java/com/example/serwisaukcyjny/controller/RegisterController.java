@@ -9,12 +9,14 @@ import com.example.serwisaukcyjny.model.Localization;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.repositories.LocalizationRepository;
 import com.example.serwisaukcyjny.model.services.LocalizationService;
+import com.example.serwisaukcyjny.model.services.LoggedUserService;
 import com.example.serwisaukcyjny.model.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -30,6 +32,7 @@ public class RegisterController {
     private final LocalizationRepository localizationRepository;
     private final LocalizationService localizationService;
     private final CategoryRepository categoryRepository;
+    private final LoggedUserService loggedUserService;
 
 
     @GetMapping
@@ -44,9 +47,9 @@ public class RegisterController {
     }
 
     @PostMapping
-    public String handleCreate(@ModelAttribute("user") @Valid CreateUserForm form, @ModelAttribute("localization") @Valid CreateLocalizationForm formLoc, Errors errors, RedirectAttributes redirectAttributes, ModelMap map) {
+    public String handleCreate(@ModelAttribute("user") @Valid CreateUserForm form, @ModelAttribute("localization")  CreateLocalizationForm formLoc, BindingResult result, RedirectAttributes redirectAttributes, ModelMap map) {
 
-        if (errors.hasErrors()) {
+        if (result.hasErrors()) {
             map.addAttribute("types", Role.values());
             map.addAttribute("voivodeships", Localization.Voivodeship.values());
             return "registered";
