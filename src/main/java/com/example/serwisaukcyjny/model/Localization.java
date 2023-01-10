@@ -1,4 +1,5 @@
 package com.example.serwisaukcyjny.model;
+
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class Localization {
     @Column(nullable = false)
     private Voivodeship voivodeship;
 
+
     public Localization(String address, String city, Voivodeship voivodeship) {
         this.address = address;
         this.city = city;
@@ -27,7 +29,7 @@ public class Localization {
 
     public enum Voivodeship {
 
-MAZOWIECKIE, SLASKIE, POMORSKIE
+MAZOWIECKIE, ŚLĄSKIE, POMORSKIE, DOLNOŚLĄSKIE, KUJAWSKO_POMORSKIE, LUBELSKIE, LUBUSKIE, ŁÓDZKIE, MAŁOPOLSKIE, OPOLSKIE, PODKARPACKIE, PODLASKIE, ŚWIĘTOKRZYSKIE, WARMIŃSKO_MAZURSKIE, WIELKOPOLSKIE, ZACHODNIOPOMORSKIE
 
     }
 
