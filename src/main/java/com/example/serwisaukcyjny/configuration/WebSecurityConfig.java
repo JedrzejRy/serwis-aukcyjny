@@ -23,9 +23,19 @@ public class WebSecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests(authorize -> authorize.anyRequest().authenticated())
-                .formLogin(Customizer.withDefaults())
-                .httpBasic(Customizer.withDefaults());
+        http.authorizeRequests(authorize -> authorize.requestMatchers("/login").permitAll()
+                        .requestMatchers("/home/register").permitAll()
+                        .requestMatchers("/home").permitAll()
+                        .requestMatchers("/resources/**", "/static/**", "/webjars/**").permitAll()
+                        .anyRequest().authenticated())
+                .formLogin()
+                .loginPage("/login")
+                .usernameParameter("username")
+                .passwordParameter("password")
+                .failureUrl("/login-error")
+                .and()
+                .logout()
+                .logoutSuccessUrl("/home");
         return http.build();
     }
 
