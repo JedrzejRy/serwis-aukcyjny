@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.validator.constraints.Length;
+import org.springframework.data.annotation.Transient;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -31,5 +33,14 @@ public class CreateAuctionForm {
     private int views;
     @NonNull
     private Category category;
+    @Length (max = 64)
+    private String photos;
+
+    @Transient
+    public String getPhotosImagePath() {
+        if (photos == null || title == null) return null;
+
+        return "/photos/" + photos;
+    }
 
 }

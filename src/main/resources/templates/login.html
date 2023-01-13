@@ -1,17 +1,68 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Login page</title>
+    <meta charset="UTF-8">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
-<body>
+<body class="bg-dark text-center">
 <h1>Login page</h1>
 <p th:if="${loginError}" class="error">Wrong user or password</p>
-<form th:action="@{/login}" method="post">
-    <label for="username">Username</label>:
-    <input type="text" id="username" name="username" autofocus="autofocus" /> <br />
-    <label for="password">Password</label>:
-    <input type="password" id="password" name="password" /> <br />
-    <input type="submit" value="Log in" />
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-5 col-md-4 col-lg-3">
+            <form th:action="@{/login}" method="post">
+                <h1 class="h3 mb-3 fw-normal text-white">Please sign in</h1>
+                <img alt=""
+                     class="mb-4"
+                     height="96"
+                     src="/assets/login.png"
+                     width="300"/>
+                <div class="form-floating">
+                    <input class="form-control"
+                           id="username"
+                           name="username"
+                           placeholder="username"
+                           autofocus="autofocus">
+                    <label for="username">Username</label>
+                </div>
+                <div class="form-floating">
+                    <input class="form-control"
+                           id="password"
+                           name="password"
+                           placeholder="password"
+                           autofocus="autofocus"
+                           type="password">
+                    <label for="password">Password</label>
+                </div>
+                <div class="alert alert-danger"
+                     th:if="${param.error}">
+                    <p>Wrong username and/or password</p>
+                </div>
+                <div class="text-bg-danger"
+                     th:if="${param.logout}">
+                    You have been logged out.
+                </div>
+                <button class="btn btn-success" type="submit" value="Log in">Zaloguj</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="text-primary">
+            <a th:href="@{/home}">back to homepage</a>
+        </div>
+        <div class="text-secondary">
+            <a th:href="@{/home/register}">register</a>
+        </div>
+    </div>
+</div>
+
 </form>
 </body>
 </html>

@@ -68,8 +68,8 @@
     </tr>
     </thead>
     <tbody>
-    <tr  th:each="auction : ${auctions}">
-      <td  th:text="${auction.title}" th:href="@{/home/auction/__${auction.getAuctionId()}__}"></td>
+    <tr th:each="auction : ${auction}">
+      <td th:text="${auction.title}"></td>
       <td class="w-25">
         <img th:src="${auction.photosImagePath}" class="img-fluid img-thumbnail">
       </td>
