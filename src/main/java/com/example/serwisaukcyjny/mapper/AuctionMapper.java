@@ -32,8 +32,8 @@ public class AuctionMapper {
                 0,
                 form.getCategory(),
                 user,
-
-                null);
+                null,
+                form.getPhotos());
     }
 
 

@@ -33,6 +33,9 @@ public class Auction {
     @Column(nullable = false)
     private int views;
 
+    @Column(nullable = true, length = 64)
+    private String photos;
+
     @ManyToOne
     Category category;
     @ManyToOne
@@ -40,7 +43,7 @@ public class Auction {
     @ManyToOne
     Localization localization;
 
-    public Auction(String title, String description, BigDecimal minimumPrice, BigDecimal buyNowPrice, boolean promotion, LocalDateTime dateOfIssue, LocalDateTime endDate, int views, Category category, User user, Localization localization) {
+    public Auction(String title, String description, BigDecimal minimumPrice, BigDecimal buyNowPrice, boolean promotion, LocalDateTime dateOfIssue, LocalDateTime endDate, int views, Category category, User user, Localization localization, String photos) {
         this.title = title;
         this.description = description;
         this.minimumPrice = minimumPrice;
@@ -52,8 +55,15 @@ public class Auction {
         this.category = category;
         this.user = user;
         this.localization = localization;
+        this.photos = photos;
     }
 
+    @org.springframework.data.annotation.Transient
+    public String getPhotosImagePath() {
+        if (photos == null) return null;
+
+        return "/photos/" + photos;
+    }
 
 }
 
