@@ -15,8 +15,7 @@ public class User {
     public User(String login, String userName, String password, LocalDateTime startDate, Role role, Localization localization) {
 
         this.login = login;
-        this.userName = username;
-
+        this.userName = userName;
         this.password = password;
         this.startDate = startDate;
         this.role = role;
