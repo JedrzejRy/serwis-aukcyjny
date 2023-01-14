@@ -38,9 +38,16 @@ public class UserService {
 
     public Optional<User> findByUserName (String userName){
 
-        return userRepository.findByUsername(userName);
+        return userRepository.findByUserName(userName);
 
     }
+
+    public Optional<User> findByLogin (String login){
+
+        return userRepository.findByLogin(login);
+
+    }
+
 
     @DeleteMapping
     public void deleteUser(@RequestBody Long id) {
