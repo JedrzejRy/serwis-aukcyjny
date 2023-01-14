@@ -7,99 +7,116 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
-<body>
-<nav class="navbar navbar-expand-lg bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="/home">Serwis Aukcyjny</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/home">Strona Główna</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/auction/list">Aukcje</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="/home" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Kategorie
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" th:href="@{/home/auction/list/{id}(id=${category.id})}" th:each="category : ${categories}" th:text="${category.categoryName}"></a></li>
-                    </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/register">Rejestracja</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/home/auction">Nowa aukcja</a>
-                </li>
-            </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Szukaj</button>
+<body class="bg-dark text-center">
+<h1>Login page</h1>
+<div class="container h-100">
+    <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-5 col-md-4 col-lg-3">
+            <!-- Początek formularza rejestracji użytkownika -->
+            <form th:object="${user}" th:action="@{/home/register}" method="post">
+                <h1 class="h3 mb-3 fw-normal text-white">Rejestracja</h1>
+
+
+                <div class="form-floating">
+                    <input class="form-control"
+                           id="login"
+                           name="login"
+                           placeholder="Adres e-mail"
+                           autofocus="autofocus"
+                           th:field="*{login}"/>
+                    <label for="login">Adres e-mail</label>
+                    <div
+                            th:if="${#fields.hasErrors('login')}"
+                            th:text="${#fields.errors('login')[0]}"
+                            class="invalid-feedback-custom">
+                    </div>
+                </div>
+
+                <div class="form-floating">
+                    <input class="form-control"
+                           id="userName"
+                           name="userName"
+                           placeholder="Nazwa użytkownika"
+                           autofocus="autofocus"
+                           type="text"
+                           th:field="*{userName}">
+                    <label for="userName">Nazwa użytkownika</label>
+                    <div
+                            th:if="${#fields.hasErrors('userName')}"
+                            th:text="${#fields.errors('userName')[0]}"
+                            class="invalid-feedback-custom">
+                    </div>
+                </div>
+
+
+                <div class="form-floating">
+                    <input class="form-control"
+                           id="password"
+                           name="password"
+                           placeholder="Hasło"
+                           autofocus="autofocus"
+                           type="password"
+                           th:field="*{password}">
+                    <label for="password">Hasło</label>
+                    <div
+                            th:if="${#fields.hasErrors('password')}"
+                            th:text="${#fields.errors('password')[0]}"
+                            class="invalid-feedback-custom">
+                    </div>
+                </div>
+
+                <!-- wstawiam lokalizację  -->
+                <form th:object="${localization}" th:action="@{/home/register}" method="post">
+                    <div class="form-floating">
+                        <select class="form-select"
+                                id="voivodeship"
+                                aria-label="Floating label select example"
+                                name="voivodeship"
+                                th:field="*{voivodeship}">
+                            <option th:each="value : ${voivodeships}" th:value="${value}" th:text="${value}"></option>
+                        </select>
+                        <label for="voivodeship">Województwo</label>
+                    </div>
+                    <div class="form-floating">
+                        <input class="form-control"
+                               id="miasto"
+                               name="miasto"
+                               placeholder="miasto"
+                               autofocus="autofocus"
+                               type="text"
+                               th:field="*{city}">
+                        <label for="miasto">Miasto</label>
+                    </div>
+                    <div class="form-floating">
+                        <input class="form-control"
+                               id="adres"
+                               name="adres"
+                               placeholder="Miasto"
+                               autofocus="autofocus"
+                               type="text"
+                               th:field="*{address}">
+                        <label for="adres">Ulica</label>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="btn btn-success">Rejestruj</button>
+                    </div>
+                </form>
             </form>
         </div>
     </div>
-</nav>
-
-<div class="container"> <!-- Początek formularza rejestracji użytkownika -->
-    <form th:object="${user}" th:action="@{/home/register}" method="post">
-        <div class="mb-3">
-            <label for="login" class="form-label">Adres e-mail:</label>
-            <input id="login" class="form-control" type="text" th:field="*{login}"/>
-            <div
-                    th:if="${#fields.hasErrors('login')}"
-                    th:text="${#fields.errors('login')[0]}"
-                    class="invalid-feedback-custom">
-            </div>
-        </div>
-
-        <div class="mb-3">
-            <label for="userName" class="form-label">Użytkownik:</label>
-            <input id="userName" class="form-control" type="text" th:field="*{userName}">
-            <div
-                    th:if="${#fields.hasErrors('userName')}"
-                    th:text="${#fields.errors('userName')[0]}"
-                    class="invalid-feedback-custom">
-            </div>
-        </div>
-
-
-        <div class="mb-3">
-            <label for="password" class="form-label">Hasło:</label>
-            <input id="password" class="form-control" type="password" th:field="*{password}">
-            <div
-                    th:if="${#fields.hasErrors('password')}"
-                    th:text="${#fields.errors('password')[0]}"
-                    class="invalid-feedback-custom">
-            </div>
-        </div>
-        <div class="mb-3">
-            <label for="type" class="form-label">Rola:</label>
-            <select id="type" class="form-control" th:field="*{role}">
-                <option th:each="role : ${roles}" th:value="${role}" th:text="${role}"></option>
-            </select>
-        </div>
-        <!-- wstawiam lokalizację  -->
-    <form th:object="${localization}" th:action="@{/home/register}" method="post">
-    <div class="mb-3">
-            <label for="type" class="form-label">Podaj województwo:</label>
-            <select id="voivodeship" th:field="*{voivodeship}" class="form-control">
-                <option th:each="value : ${voivodeships}" th:value="${value}" th:text="${value}"></option>
-            </select>
-            <label for="type" class="form-label">Miasto:</label>
-            <input id="miasto" class="form-control" type="text" th:field="*{city}">
-            <label for="type" class="form-label">Adres:</label>
-            <input id="adres" class="form-control" type="text" th:field="*{address}">
-        </div>
-        <div>
-            <button type="submit" class="btn btn-primary">Rejestruj</button>
-        </div>
-    </form>
-    </form>
 </div>
+
+<div class="container">
+<div class="row">
+    <div class="text-primary">
+        <a th:href="@{/home}">Strona główna</a>
+    </div>
+    <div class="text-secondary">
+        <a th:href="@{/home/register}">Rejestracja</a>
+    </div>
+</div>
+</div>
+
 </body>
 </html>

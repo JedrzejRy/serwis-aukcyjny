@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
     <title>Home</title>
@@ -34,19 +35,56 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/home/register">Rejestracja</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/home/auction">Nowa aukcja</a>
                 </li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="/login" class="btn btn-light btn-small navbar-btn">Logowanie</a> </li>
                 <li>
-                    <div class="btn-nav">
+                    <div sec:authorize="!isAuthenticated()">
+                        <a href="/login" class="btn btn-light btn-small navbar-btn">Logowanie</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="btn-nav" sec:authorize="!isAuthenticated()">
                         <a class="btn btn-primary btn-small navbar-btn" href="/home/register">Rejestracja</a>
                     </div>
                 </li>
+                <div class="dropdown"
+                     sec:authorize="isAuthenticated()">
+                    <a aria-expanded="false"
+                       aria-haspopup="true"
+                       class="nav-link dropdown-toggle text-black"
+                       data-bs-toggle="dropdown"
+                       href="#"
+                       id="profileDropdown"
+                       role="button">
+                        <span sec:authentication="name">[USERNAME]</span>
+                    </a>
+                    <ul aria-labelledby="profileDropdown"
+                        class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/profile}">
+                                Mój profil
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/my-auctions}">
+                                Moje Aukcje
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger fw-semibold"
+                               th:href="@{/perform-log-out}">
+                                Wyloguj
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </ul>
         </div>
     </div>
