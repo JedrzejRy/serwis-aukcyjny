@@ -9,11 +9,12 @@
 </head>
 <body class="bg-dark text-center">
 <h1>Login page</h1>
+<p th:if="${loginError}" class="error">Wrong user or password</p>
 <div class="container h-100">
     <div class="row h-100 justify-content-center align-items-center">
         <div class="col-5 col-md-4 col-lg-3">
             <form th:action="@{/login}" method="post">
-                <h1 class="h3 mb-3 fw-normal text-white">Logowanie</h1>
+                <h1 class="h3 mb-3 fw-normal text-white">Please sign in</h1>
                 <img alt=""
                      class="mb-4"
                      height="96"
@@ -25,7 +26,7 @@
                            name="username"
                            placeholder="username"
                            autofocus="autofocus">
-                    <label for="username">Login</label>
+                    <label for="username">Username</label>
                 </div>
                 <div class="form-floating">
                     <input class="form-control"
@@ -34,11 +35,11 @@
                            placeholder="password"
                            autofocus="autofocus"
                            type="password">
-                    <label for="password">Hasło</label>
+                    <label for="password">Password</label>
                 </div>
                 <div class="alert alert-danger"
                      th:if="${param.error}">
-                    <p>Niepoprawny login lub/i hasło</p>
+                    <p>Wrong username and/or password</p>
                 </div>
                 <div class="text-bg-danger"
                      th:if="${param.logout}">
@@ -54,10 +55,10 @@
 <div class="container">
     <div class="row">
         <div class="text-primary">
-            <a th:href="@{/home}">Strona główna</a>
+            <a th:href="@{/home}">back to homepage</a>
         </div>
         <div class="text-secondary">
-            <a th:href="@{/home/register}">Rejestracja</a>
+            <a th:href="@{/home/register}">register</a>
         </div>
     </div>
 </div>

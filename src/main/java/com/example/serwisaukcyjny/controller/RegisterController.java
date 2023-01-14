@@ -29,13 +29,16 @@ public class RegisterController {
 
     private static final String MESSAGE_KEY = "message";
     private final UserService userService;
+    private final LocalizationRepository localizationRepository;
     private final LocalizationService localizationService;
     private final CategoryRepository categoryRepository;
+    private final LoggedUserService loggedUserService;
 
 
     @GetMapping
     public String register(ModelMap map) {
         map.addAttribute("user", new CreateUserForm());
+        map.addAttribute("roles", Role.values());
         map.addAttribute("localization", new CreateLocalizationForm());
         map.addAttribute("voivodeships", Localization.Voivodeship.values());
         map.addAttribute("categories", categoryRepository.findAll());
@@ -47,6 +50,7 @@ public class RegisterController {
     public String handleCreate(@ModelAttribute("user") @Valid CreateUserForm form, BindingResult userFormBindingResult, @Valid @ModelAttribute("localization")  CreateLocalizationForm formLoc, BindingResult formLocBindingResult, RedirectAttributes redirectAttributes, ModelMap map) {
 
         if (userFormBindingResult.hasErrors() || formLocBindingResult.hasErrors()) {
+            map.addAttribute("types", Role.values());
             map.addAttribute("voivodeships", Localization.Voivodeship.values());
             return "registered";
         }
