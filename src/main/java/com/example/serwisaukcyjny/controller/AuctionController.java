@@ -1,10 +1,12 @@
 package com.example.serwisaukcyjny.controller;
 
 import com.example.serwisaukcyjny.Util.FileUploadUtil;
+import com.example.serwisaukcyjny.authentication.IAuthenticationFacade;
 import com.example.serwisaukcyjny.form.CreateAuctionForm;
 import com.example.serwisaukcyjny.mapper.AuctionMapper;
 import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.Category;
+import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.services.AuctionService;
 import com.example.serwisaukcyjny.model.services.CategoryService;
@@ -14,6 +16,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUpload;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -38,8 +41,8 @@ public class AuctionController {
 
     private final AuctionService auctionService;
     private final CategoryRepository categoryRepository;
-    private final CategoryService categoryService;
     private final UserService userService;
+    private final IAuthenticationFacade authenticationFacade;
 
     @GetMapping
     public String create(ModelMap map) {
@@ -63,7 +66,11 @@ public class AuctionController {
         Path absolutePath = currentPath.toAbsolutePath();
         Path filePath = Paths.get(absolutePath + uploadDir + fileName);
         Files.write(filePath, multipartFile.getBytes());
-        auctionService.save(AuctionMapper.toEntity(form, userService.findByUserName(principal.getName()).get()));
+
+        Authentication authentication = authenticationFacade.getAuthentication();
+        String userName = authentication.getName();
+
+        auctionService.save(AuctionMapper.toEntity(form,userService.findByLogin(principal.getName()).get()));
         redirectAttributes.addAttribute("message", "Aukcja o tytule " + form.getTitle() + " została pomyślnie dodana!");
 
 

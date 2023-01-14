@@ -42,6 +42,13 @@ public class UserService {
 
     }
 
+    public Optional<User> findByLogin (String login){
+
+        return userRepository.findByLogin(login);
+
+    }
+
+
     @DeleteMapping
     public void deleteUser(@RequestBody Long id) {
         userRepository.deleteById(id);
