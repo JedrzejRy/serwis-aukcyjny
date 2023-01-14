@@ -12,10 +12,11 @@ import java.time.LocalDateTime;
 @ToString
 public class User {
 
-    public User(String login, String username, String password, LocalDateTime startDate, Role role, Localization localization) {
+    public User(String login, String userName, String password, LocalDateTime startDate, Role role, Localization localization) {
 
         this.login = login;
         this.userName = username;
+
         this.password = password;
         this.startDate = startDate;
         this.role = role;
