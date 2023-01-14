@@ -69,7 +69,9 @@
     </thead>
     <tbody>
     <tr  th:each="auction : ${auctions}">
-      <td  th:text="${auction.title}" th:href="@{/home/auction/__${auction.getAuctionId()}__}"></td>
+      <td>
+        <a class="btn btn-light" th:text="${auction.title}" th:href="@{/home/auction/__${auction.getAuctionId()}__}" role="button" target="_self"></a>
+      </td>
       <td class="w-25">
         <img th:src="${auction.photosImagePath}" class="img-fluid img-thumbnail">
       </td>
@@ -80,10 +82,6 @@
       <td th:text="${auction.promotion}"></td>
       <td th:text="${auction.dateOfIssue}"></td>
       <td th:text="${auction.endDate}"></td>
-      <td>
-        <a class="btn btn-success" href="#" role="button" target="_self">Kup Teraz</a>
-        <a class="btn btn-danger" href="#" role="button" target="_self">Licytuj</a>
-      </td>
     </tr>
     </tbody>
   </table>
