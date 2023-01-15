@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -26,7 +27,7 @@ public class WebSecurityConfig {
         http.authorizeRequests(authorize -> authorize.requestMatchers("/login").permitAll()
                         .requestMatchers("/home/register").permitAll()
                         .requestMatchers("/home").permitAll()
-                        .requestMatchers("/resources/**", "/static/**", "/webjars/**","/assets/**").permitAll()
+                        .requestMatchers("/resources/**", "/static/**", "/webjars/**", "/assets/**").permitAll()
                         .anyRequest().authenticated())
                 .formLogin()
                 .loginPage("/login")
@@ -35,8 +36,13 @@ public class WebSecurityConfig {
                 .passwordParameter("password")
                 .failureUrl("/login?error")
                 .and()
-                .logout()
-                .logoutSuccessUrl("/home");
+                .logout(logout -> logout
+                        .logoutUrl("/perform-log-out")
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/perform-log-out", "GET"))
+                        .logoutSuccessUrl("/login?logout=true")
+                        .invalidateHttpSession(true)
+                        .clearAuthentication(true)
+                        .permitAll());
         return http.build();
     }
 
