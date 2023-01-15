@@ -70,7 +70,7 @@ public class AuctionController {
         Authentication authentication = authenticationFacade.getAuthentication();
         String userName = authentication.getName();
 
-        auctionService.save(AuctionMapper.toEntity(form,userService.findByLogin(principal.getName()).get()));
+        auctionService.save(AuctionMapper.toEntity(form,userService.findByLogin(userName).get()));
         redirectAttributes.addAttribute("message", "Aukcja o tytule " + form.getTitle() + " została pomyślnie dodana!");
 
 
