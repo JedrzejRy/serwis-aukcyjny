@@ -26,8 +26,7 @@ public class Purchase {
     @Column(nullable = false)
     private BigDecimal price;
 
-    public Purchase(int id, @NonNull Auction auction, User user, BigDecimal price) {
-        this.id = id;
+    public Purchase(@NonNull Auction auction, @NonNull User user, BigDecimal price) {
         this.auction = auction;
         this.user = user;
         this.price = price;

@@ -26,10 +26,8 @@ public class Comment {
     @OneToOne
     private User user;
 
-
-    public Comment(int id, String comment, @NonNull Purchase purchase, @NonNull User user) {
-        this.id = id;
-        this.text = comment;
+    public Comment(String text, @NonNull Purchase purchase, @NonNull User user) {
+        this.text = text;
         this.purchase = purchase;
         this.user = user;
     }
