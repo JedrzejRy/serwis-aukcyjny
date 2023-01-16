@@ -23,8 +23,9 @@ public class Rating {
     @OneToOne
     Purchase purchaseId;
 
-    public Rating(RatingScore buyerRatingScore, RatingScore sellerRatingScore) {
+    public Rating(RatingScore buyerRatingScore, RatingScore sellerRatingScore, Purchase purchaseId) {
         this.buyerRatingScore = buyerRatingScore;
         this.sellerRatingScore = sellerRatingScore;
+        this.purchaseId = purchaseId;
     }
 }

@@ -1,7 +1,5 @@
 package com.example.serwisaukcyjny.controller;
 
-import com.example.serwisaukcyjny.Util.FileUploadUtil;
-import com.example.serwisaukcyjny.authentication.IAuthenticationFacade;
 import com.example.serwisaukcyjny.form.CreateAuctionForm;
 import com.example.serwisaukcyjny.mapper.AuctionMapper;
 import com.example.serwisaukcyjny.model.Auction;
@@ -9,14 +7,11 @@ import com.example.serwisaukcyjny.model.Category;
 import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.services.AuctionService;
-import com.example.serwisaukcyjny.model.services.CategoryService;
+import com.example.serwisaukcyjny.model.services.PurchaseService;
 import com.example.serwisaukcyjny.model.services.UserService;
-import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.tomcat.util.http.fileupload.FileUpload;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -24,7 +19,6 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.view.RedirectView;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -42,7 +36,7 @@ public class AuctionController {
     private final AuctionService auctionService;
     private final CategoryRepository categoryRepository;
     private final UserService userService;
-    private final IAuthenticationFacade authenticationFacade;
+    private final PurchaseService purchaseService;
 
     @GetMapping
     public String create(ModelMap map) {
@@ -52,7 +46,7 @@ public class AuctionController {
     }
 
     @PostMapping
-    public String handleCreate(@ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map, Principal principal, @RequestParam("image")MultipartFile multipartFile) throws IOException {
+    public String handleCreate(@ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map, Principal principal, @RequestParam("image") MultipartFile multipartFile) throws IOException {
 
         if (errors.hasErrors()) {
             map.addAttribute("categories", categoryRepository.findAll());
@@ -67,10 +61,9 @@ public class AuctionController {
         Path filePath = Paths.get(absolutePath + uploadDir + fileName);
         Files.write(filePath, multipartFile.getBytes());
 
-        Authentication authentication = authenticationFacade.getAuthentication();
-        String userName = authentication.getName();
+        User loggedUser = userService.findByLogin(principal.getName()).get();
 
-        auctionService.save(AuctionMapper.toEntity(form,userService.findByLogin(userName).get()));
+        auctionService.save(AuctionMapper.toEntity(form, loggedUser, loggedUser.getLocalization()));
         redirectAttributes.addAttribute("message", "Aukcja o tytule " + form.getTitle() + " została pomyślnie dodana!");
 
 
@@ -78,10 +71,9 @@ public class AuctionController {
     }
 
 
-
     @GetMapping("/list")
     public String list(ModelMap map, @ModelAttribute("message") String message) {
-        map.addAttribute("auctions", auctionService.findAll());
+        map.addAttribute("auctions", auctionService.findAllOpenAuctions());
         map.addAttribute("categories", categoryRepository.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
@@ -91,7 +83,7 @@ public class AuctionController {
 
 
     @GetMapping("/list/{id}")
-    public String categoryList(@PathVariable int id, ModelMap map, @ModelAttribute("message") String message) {
+    public String auctionCategoryList(@PathVariable int id, ModelMap map, @ModelAttribute("message") String message) {
         List<Category> categoryList = (List<Category>) categoryRepository.findAll();
         map.addAttribute("auctions", auctionService.findAllByCategory(categoryList.get(id - 1)));
         map.addAttribute("categories", categoryRepository.findAll());
@@ -102,13 +94,37 @@ public class AuctionController {
     }
 
     @GetMapping("/{id}")
-    public String AuctionPage(@PathVariable Long id, ModelMap map,@ModelAttribute("message") String message) {
+    public String AuctionPage(@PathVariable Long id, ModelMap map, @ModelAttribute("message") String message) {
         map.addAttribute("auction", auctionService.findByID(id));
         map.addAttribute("categories", categoryRepository.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
         }
         return "auction-page";
+    }
+
+    @GetMapping("/purchased")
+    public String purchasedList(ModelMap map, @ModelAttribute("message") String message, Principal principal) {
+        User loggedUser = userService.findByLogin(principal.getName()).get();
+        List<Auction> auctions = auctionService.findAllPurchasedAuctionsByUser(loggedUser);
+        map.addAttribute("auctions", auctions);
+        map.addAttribute("categories", categoryRepository.findAll());
+        if (!message.isBlank()) {
+            map.addAttribute("message", message);
+        }
+        return "auction-list";
+    }
+
+    @GetMapping("/my-auctions")
+    public String myAuctionsList(ModelMap map, @ModelAttribute("message") String message, Principal principal) {
+        User loggedUser = userService.findByLogin(principal.getName()).get();
+        List<Auction> auctions = auctionService.findAllByUser(loggedUser);
+        map.addAttribute("auctions", auctions);
+        map.addAttribute("categories", categoryRepository.findAll());
+        if (!message.isBlank()) {
+            map.addAttribute("message", message);
+        }
+        return "auction-list";
     }
 
 }

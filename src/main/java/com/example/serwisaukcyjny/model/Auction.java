@@ -3,12 +3,14 @@ package com.example.serwisaukcyjny.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Getter
+@Setter
 @Entity
 @ToString
 @NoArgsConstructor

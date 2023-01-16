@@ -81,14 +81,18 @@
       <td th:text="${auction.dateOfIssue}"></td>
       <td th:text="${auction.endDate}"></td>
       <td>
-        <a class="btn btn-success" href="#" role="button" target="_self">Kup Teraz</a>
         <a class="btn btn-danger" href="#" role="button" target="_self">Licytuj</a>
       </td>
     </tr>
     </tbody>
   </table>
-  <div>
-    <a class="btn btn-primary" href="/home/auction" role="button" target="_self">Dodaj Aukcje</a>
+  <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+    <form method="post"
+          th:action="@{/home/auction/buy/__${auction.getAuctionId()}__}">
+      <button class="btn btn-primary btn-lg px-4 me-sm-3" type="submit">
+        Kup teraz
+      </button>
+    </form>
   </div>
 </div>
 
