@@ -1,6 +1,5 @@
 package com.example.serwisaukcyjny.controller;
 
-import com.example.serwisaukcyjny.mapper.PurchaseMapper;
 import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.Purchase;
 import com.example.serwisaukcyjny.model.User;
@@ -10,7 +9,6 @@ import com.example.serwisaukcyjny.model.services.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;

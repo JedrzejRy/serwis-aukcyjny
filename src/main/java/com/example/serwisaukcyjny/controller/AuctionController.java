@@ -1,5 +1,6 @@
 package com.example.serwisaukcyjny.controller;
 
+import com.example.serwisaukcyjny.authentication.IAuthenticationFacade;
 import com.example.serwisaukcyjny.form.CreateAuctionForm;
 import com.example.serwisaukcyjny.mapper.AuctionMapper;
 import com.example.serwisaukcyjny.model.Auction;
@@ -12,6 +13,8 @@ import com.example.serwisaukcyjny.model.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.AnonymousAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.StringUtils;
@@ -37,6 +40,7 @@ public class AuctionController {
     private final CategoryRepository categoryRepository;
     private final UserService userService;
     private final PurchaseService purchaseService;
+    private final IAuthenticationFacade authenticationFacade;
 
     @GetMapping
     public String create(ModelMap map) {
@@ -83,9 +87,9 @@ public class AuctionController {
 
 
     @GetMapping("/list/{id}")
-    public String auctionCategoryList(@PathVariable int id, ModelMap map, @ModelAttribute("message") String message) {
+    public String auctionByCategoryList(@PathVariable int id, ModelMap map, @ModelAttribute("message") String message) {
         List<Category> categoryList = (List<Category>) categoryRepository.findAll();
-        map.addAttribute("auctions", auctionService.findAllByCategory(categoryList.get(id - 1)));
+        map.addAttribute("auctions", auctionService.findAllOpenAuctionsByCategory(categoryList.get(id - 1)));
         map.addAttribute("categories", categoryRepository.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
@@ -94,7 +98,15 @@ public class AuctionController {
     }
 
     @GetMapping("/{id}")
-    public String AuctionPage(@PathVariable Long id, ModelMap map, @ModelAttribute("message") String message) {
+    public String AuctionPage(@PathVariable Long id, ModelMap map, @ModelAttribute("message") String message, Principal principal) {
+
+        Authentication authentication = authenticationFacade.getAuthentication();
+
+        if (!(authentication instanceof AnonymousAuthenticationToken)){
+            User loggedUser = userService.findByLogin(principal.getName()).get();
+            map.addAttribute("loggedUser", loggedUser);
+        }
+
         map.addAttribute("auction", auctionService.findByID(id));
         map.addAttribute("categories", categoryRepository.findAll());
         if (!message.isBlank()) {

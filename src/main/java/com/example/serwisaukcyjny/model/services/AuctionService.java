@@ -41,6 +41,11 @@ public class AuctionService {
         return auctionRepository.findAllByCategory(category);
     }
 
+    public List<Auction> findAllOpenAuctionsByCategory(Category category) {
+        return findAllOpenAuctions().stream().filter(auction -> auction.getCategory() == category).collect(Collectors.toList());
+
+    }
+
     public List<Auction> findAllOpenAuctions(){
         List<Purchase> purchases = (List<Purchase>) purchaseService.findAll();
         List<Auction> auctions = findAll();

@@ -18,6 +18,7 @@ public class CreateUserForm {
 
 
     @Email(message = "niepoprawny format email")
+    @NotBlank(message = "niepoprawny format email")
     private String login;
     @NotBlank(message = "uzupełnij nazwę użytkownika")
     private String userName;
