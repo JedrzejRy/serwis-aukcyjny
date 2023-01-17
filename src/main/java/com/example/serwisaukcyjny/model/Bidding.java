@@ -21,14 +21,14 @@ public class Bidding {
     private BigDecimal price;
 
     @OneToOne
-    Auction auctionID;
+    Auction auction;
 
     @OneToOne
-    User userId;
+    User user;
 
-    public Bidding(BigDecimal price, Auction auctionID, User userId) {
+    public Bidding(BigDecimal price, Auction auction, User user) {
         this.price = price;
-        this.auctionID = auctionID;
-        this.userId = userId;
+        this.auction = auction;
+        this.user = user;
     }
 }

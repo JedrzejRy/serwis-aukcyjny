@@ -16,6 +16,11 @@
             <form th:object="${user}" th:action="@{/home/register}" method="post">
                 <h1 class="h3 mb-3 fw-normal text-white">Rejestracja</h1>
 
+                <div class="alert alert-danger"
+                     th:each="err : ${#fields.errors('global')}"
+                     th:if="${#fields.hasErrors('global')}"
+                     th:text="${err}">
+                </div>
 
                 <div class="form-floating">
                     <input class="form-control"
