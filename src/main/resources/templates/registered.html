@@ -28,7 +28,7 @@
                     <div
                             th:if="${#fields.hasErrors('login')}"
                             th:text="${#fields.errors('login')[0]}"
-                            class="invalid-feedback-custom">
+                            class="text-danger">
                     </div>
                 </div>
 
@@ -44,7 +44,7 @@
                     <div
                             th:if="${#fields.hasErrors('userName')}"
                             th:text="${#fields.errors('userName')[0]}"
-                            class="invalid-feedback-custom">
+                            class="text-danger">
                     </div>
                 </div>
 
@@ -61,7 +61,7 @@
                     <div
                             th:if="${#fields.hasErrors('password')}"
                             th:text="${#fields.errors('password')[0]}"
-                            class="invalid-feedback-custom">
+                            class="text-danger">
                     </div>
                 </div>
 
@@ -86,6 +86,11 @@
                                type="text"
                                th:field="*{city}">
                         <label for="miasto">Miasto</label>
+                        <div
+                                th:if="${#fields.hasErrors('city')}"
+                                th:text="${#fields.errors('city')[0]}"
+                                class="text-danger">
+                        </div>
                     </div>
                     <div class="form-floating">
                         <input class="form-control"
@@ -96,6 +101,11 @@
                                type="text"
                                th:field="*{address}">
                         <label for="adres">Ulica</label>
+                        <div
+                                th:if="${#fields.hasErrors('address')}"
+                                th:text="${#fields.errors('address')[0]}"
+                                class="text-danger">
+                        </div>
                     </div>
 
                     <div>
