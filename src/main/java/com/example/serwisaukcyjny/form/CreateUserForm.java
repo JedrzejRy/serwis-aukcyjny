@@ -1,5 +1,6 @@
 package com.example.serwisaukcyjny.form;
 
+import com.example.serwisaukcyjny.form.validation.constrains.UniqueLogin;
 import com.example.serwisaukcyjny.model.Localization;
 import com.example.serwisaukcyjny.model.Role;
 import jakarta.validation.constraints.Email;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@UniqueLogin(message = "Na podany E-mail założone jest już konto")
 public class CreateUserForm {
 
 

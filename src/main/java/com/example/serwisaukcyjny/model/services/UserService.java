@@ -48,6 +48,9 @@ public class UserService {
 
     }
 
+    public boolean existsByLogin(String login) {
+        return userRepository.existsByLogin(login);
+    }
 
     @DeleteMapping
     public void deleteUser(@RequestBody Long id) {

@@ -2,6 +2,7 @@ package com.example.serwisaukcyjny.controller;
 
 import com.example.serwisaukcyjny.authentication.IAuthenticationFacade;
 import com.example.serwisaukcyjny.form.CreateAuctionForm;
+import com.example.serwisaukcyjny.form.CreateBiddingForm;
 import com.example.serwisaukcyjny.mapper.AuctionMapper;
 import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.Category;
@@ -106,7 +107,7 @@ public class AuctionController {
             User loggedUser = userService.findByLogin(principal.getName()).get();
             map.addAttribute("loggedUser", loggedUser);
         }
-
+        map.addAttribute("bidding", new CreateBiddingForm());
         map.addAttribute("auction", auctionService.findByID(id));
         map.addAttribute("categories", categoryRepository.findAll());
         if (!message.isBlank()) {

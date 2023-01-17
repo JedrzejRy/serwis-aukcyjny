@@ -1,100 +1,123 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>Lista aukcji</title>
-  <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" ></script>
-  <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Lista aukcji</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/home">Serwis Aukcyjny</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/home">Strona Główna</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/home/auction/list">Aukcje</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="/home" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Kategorie
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" th:href="@{/home/auction/list/{id}(id=${category.id})}" th:each="category : ${categories}" th:text="${category.categoryName}"></a></li>
-          </ul>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/home/register">Rejestracja</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/home/auction">Nowa aukcja</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Szukaj</button>
-      </form>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home">Serwis Aukcyjny</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/home">Strona Główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/auction/list">Aukcje</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/home" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Kategorie
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/home/auction/list/{id}(id=${category.id})}"
+                               th:each="category : ${categories}" th:text="${category.categoryName}"></a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/register">Rejestracja</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/auction">Nowa aukcja</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Szukaj</button>
+            </form>
+        </div>
     </div>
-  </div>
 </nav>
 <div class="container">
-  <div class="alert alert-success alert-dismissible fade show"
-       role="alert"
-       th:if="${!message.isBlank()}"
-       th:text="${message}">
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-  </div>
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Tytuł</th>
-      <th>Zdjęcia</th>
-      <th>Opis</th>
-      <th>Cena minimalna</th>
-      <th>Cena kup teraz</th>
-      <th>Kategoria</th>
-      <th>Promowany</th>
-      <th>Data wystawiena</th>
-      <th>Data zakończenia</th>
-      <th></th>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="auction : ${auction}">
-      <td th:text="${auction.title}"></td>
-      <td class="w-25">
-        <img th:src="${auction.photosImagePath}" class="img-fluid img-thumbnail">
-      </td>
-      <td th:text="${auction.description}"></td>
-      <td th:text="${auction.minimumPrice}"></td>
-      <td th:text="${auction.buyNowPrice}"></td>
-      <td th:text="${auction.category.categoryName}"></td>
-      <td th:text="${auction.promotion}"></td>
-      <td th:text="${auction.dateOfIssue}"></td>
-      <td th:text="${auction.endDate}"></td>
-      <td>
-        <a class="btn btn-danger" href="#" role="button" target="_self">Licytuj</a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-  <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start"
-  th:if="!${auction.user == loggedUser}">
-    <form method="post"
-          th:action="@{/home/auction/buy/__${auction.getAuctionId()}__}">
-      <button class="btn btn-primary btn-lg px-4 me-sm-3" type="submit">
-        Kup teraz
-      </button>
-    </form>
-  </div>
+    <div class="alert alert-success alert-dismissible fade show"
+         role="alert"
+         th:if="${!message.isBlank()}"
+         th:text="${message}">
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>Tytuł</th>
+            <th>Zdjęcia</th>
+            <th>Opis</th>
+            <th>Cena minimalna</th>
+            <th>Cena kup teraz</th>
+            <th>Kategoria</th>
+            <th>Promowany</th>
+            <th>Data wystawiena</th>
+            <th>Data zakończenia</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="auction : ${auction}">
+            <td th:text="${auction.title}"></td>
+            <td class="w-25">
+                <img th:src="${auction.photosImagePath}" class="img-fluid img-thumbnail">
+            </td>
+            <td th:text="${auction.description}"></td>
+            <td th:text="${auction.minimumPrice}"></td>
+            <td th:text="${auction.buyNowPrice}"></td>
+            <td th:text="${auction.category.categoryName}"></td>
+            <td th:text="${auction.promotion}"></td>
+            <td th:text="${auction.dateOfIssue}"></td>
+            <td th:text="${auction.endDate}"></td>
+            <td>
+                <a class="btn btn-danger" href="#" role="button" target="_self">Licytuj</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start"
+         th:if="!${auction.user == loggedUser}">
+        <form method="post"
+              th:action="@{/home/auction/buy/__${auction.getAuctionId()}__}">
+            <button class="btn btn-primary btn-lg px-4 me-sm-3" type="submit">
+                Kup teraz
+            </button>
+        </form>
+    </div>
+    <div class="container">
+        <form th:action="@{/home/auction/bid/__${auction.getAuctionId()}__}"
+              th:if="!${auction.user == loggedUser}"
+              th:object="${bidding}"
+              method="post"
+              enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="price" class="form-label">Cena:</label>
+                <input id="price" type="number" th:field="*{price}" class="form-control"/>
+                <div
+                        th:if="${#fields.hasErrors('price')}"
+                        th:text="${#fields.errors('price')[0]}"
+                        class="invalid-feedback-custom">
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">Licytuj</button>
+            </div>
+        </form>
+    </div>
 </div>
 
 </body>
