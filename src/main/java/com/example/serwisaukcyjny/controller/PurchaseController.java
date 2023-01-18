@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
 import java.time.LocalDateTime;
@@ -25,13 +26,14 @@ public class PurchaseController {
 
 
     @PostMapping("/{id}")
-    public String handleCreate(@PathVariable Long id, Principal principal) {
+    public String handleCreate(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes) {
 
         User loggedUser = userService.findByLogin(principal.getName()).get();
         Auction currentAuction = auctionService.findByID(id);
         currentAuction.setEndDate(LocalDateTime.now());
         purchaseService.save(new Purchase(currentAuction, loggedUser, currentAuction.getBuyNowPrice()));
 
+        redirectAttributes.addAttribute("message", "Aukcja pomyśle kupiona!");
         return "redirect:/home/auction/" + id;
     }
 

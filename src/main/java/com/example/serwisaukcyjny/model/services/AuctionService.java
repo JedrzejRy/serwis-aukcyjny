@@ -1,15 +1,14 @@
 package com.example.serwisaukcyjny.model.services;
 
-import com.example.serwisaukcyjny.model.Auction;
-import com.example.serwisaukcyjny.model.Category;
-import com.example.serwisaukcyjny.model.Purchase;
-import com.example.serwisaukcyjny.model.User;
+import com.example.serwisaukcyjny.model.*;
 import com.example.serwisaukcyjny.model.repositories.AuctionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -19,6 +18,7 @@ public class AuctionService {
 
     private final AuctionRepository auctionRepository;
     private final PurchaseService purchaseService;
+    private final ObserverService observerService;
 
     public List<Auction> findAll() {
         return StreamSupport.stream(auctionRepository.findAll().spliterator(), false)
@@ -47,7 +47,7 @@ public class AuctionService {
     }
 
     public List<Auction> findAllOpenAuctions(){
-        List<Purchase> purchases = (List<Purchase>) purchaseService.findAll();
+        List<Purchase> purchases = purchaseService.findAll();
         List<Auction> auctions = findAll();
         for(Purchase purchase: purchases){
             auctions.remove(purchase.getAuction());
@@ -75,6 +75,14 @@ public class AuctionService {
             auctions.add(purchase.getAuction());
         }
         return auctions;
+    }
+
+    public Set<Auction> findFollowedAuctions(User loggedUser){
+        Observer observer = observerService.findByUser(loggedUser);
+        if (observer==null){
+            return new HashSet<Auction>();
+        }
+        return observer.getAuctions();
     }
 
 }
