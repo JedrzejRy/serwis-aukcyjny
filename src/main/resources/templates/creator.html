@@ -92,6 +92,23 @@
             <label class="form-check-label" for="promotion">Promowanie</label>
             <input class="form-check-input" type="checkbox" id="promotion" th:field="*{promotion}">
         </div>
+        <div class="col-md-12">
+            <div class="form-floating mb-3">
+                <input class="form-control text-area-mt-15"
+                       id="floatingEndDate"
+                       placeholder="Ending date"
+                       required th:field="*{endDate}"
+                       type="datetime-local">
+                <label class="text-black" for="floatingEndDate">
+                    Data zakończenia aukcji
+                </label>
+            </div>
+            <div class="invalid-feedback-custom"
+                 th:each="err : ${#fields.errors('global')}"
+                 th:if="${#fields.hasErrors('global')}"
+                 th:text="${err}">
+            </div>
+        </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">Zdjęcia: </label>
             <input class="form-control" type="file" id="formFile" name="image" accept="image/png, image/jpeg"/>
