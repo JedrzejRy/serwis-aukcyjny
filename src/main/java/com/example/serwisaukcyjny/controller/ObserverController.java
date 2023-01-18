@@ -37,13 +37,14 @@ public class ObserverController {
         Auction currentAuction = auctionService.findByID(id);
         currentAuction.setEndDate(LocalDateTime.now());
 
-        if (observerService.existByUser(loggedUser)){
+        if (observerService.existByUser(loggedUser)) {
             Observer loggedUserObserver = observerService.findByUser(loggedUser);
             loggedUserObserver.getAuctions().add(currentAuction);
+            observerService.save(loggedUserObserver);
         } else {
             Set<Auction> auctions = new HashSet<>();
             auctions.add(currentAuction);
-            observerService.save(new Observer(auctions,loggedUser));
+            observerService.save(new Observer(auctions, loggedUser));
         }
 
         redirectAttributes.addAttribute("message", "Aukcja dodana do obserwowanych");

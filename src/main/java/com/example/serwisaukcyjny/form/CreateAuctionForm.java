@@ -1,5 +1,7 @@
 package com.example.serwisaukcyjny.form;
 
+import com.example.serwisaukcyjny.form.validation.constrains.AuctionDuration;
+import com.example.serwisaukcyjny.form.validation.constrains.AuctionPastDate;
 import com.example.serwisaukcyjny.model.Category;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotBlank;
@@ -17,6 +19,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@AuctionDuration(message = "Aukcja może trwać maksymalnie tydzień")
+@AuctionPastDate(message = "Aukcja musi trwać minimum jeden dzień")
 public class CreateAuctionForm {
 
     @NotBlank (message = "aukcja musi mieć tytuł")
