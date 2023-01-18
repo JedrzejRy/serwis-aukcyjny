@@ -3,7 +3,10 @@ package com.example.serwisaukcyjny.model;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.ToString;
+
+import java.util.Set;
 
 @Entity
 @Getter
@@ -13,13 +16,13 @@ public class Observer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @Column(nullable = false)
-    private int auctionId;
-    @Column(nullable = false)
-    private int userId;
+    @OneToMany
+    private Set<Auction> auctions;
+    @ManyToOne
+    private User user;
 
-    public Observer(int auctionId, int userId) {
-        this.auctionId = auctionId;
-        this.userId = userId;
+    public Observer(Set<Auction> auctions, User user) {
+        this.auctions = auctions;
+        this.user = user;
     }
 }

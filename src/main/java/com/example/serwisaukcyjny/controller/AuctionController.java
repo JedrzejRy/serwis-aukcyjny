@@ -6,9 +6,11 @@ import com.example.serwisaukcyjny.form.CreateBiddingForm;
 import com.example.serwisaukcyjny.mapper.AuctionMapper;
 import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.Category;
+import com.example.serwisaukcyjny.model.Observer;
 import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.services.AuctionService;
+import com.example.serwisaukcyjny.model.services.ObserverService;
 import com.example.serwisaukcyjny.model.services.PurchaseService;
 import com.example.serwisaukcyjny.model.services.UserService;
 import jakarta.validation.Valid;
@@ -30,6 +32,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @Slf4j
@@ -41,6 +44,7 @@ public class AuctionController {
     private final CategoryRepository categoryRepository;
     private final UserService userService;
     private final PurchaseService purchaseService;
+    private final ObserverService observerService;
     private final IAuthenticationFacade authenticationFacade;
 
     @GetMapping
@@ -139,5 +143,18 @@ public class AuctionController {
         }
         return "auction-list";
     }
+
+    @GetMapping("/followed")
+    public String followedAuctions(ModelMap map, @ModelAttribute("message") String message, Principal principal) {
+        User loggedUser = userService.findByLogin(principal.getName()).get();
+        Set<Auction> auctions = auctionService.findFollowedAuctions(loggedUser);
+        map.addAttribute("auctions", auctions);
+        map.addAttribute("categories", categoryRepository.findAll());
+        if (!message.isBlank()) {
+            map.addAttribute("message", message);
+        }
+        return "auction-list";
+    }
+
 
 }
