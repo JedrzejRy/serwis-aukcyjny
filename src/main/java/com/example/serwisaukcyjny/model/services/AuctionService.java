@@ -5,6 +5,7 @@ import com.example.serwisaukcyjny.model.repositories.AuctionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,6 +20,7 @@ public class AuctionService {
     private final AuctionRepository auctionRepository;
     private final PurchaseService purchaseService;
     private final ObserverService observerService;
+    private final UserService userService;
 
     public List<Auction> findAll() {
         return StreamSupport.stream(auctionRepository.findAll().spliterator(), false)
@@ -37,7 +39,7 @@ public class AuctionService {
         return auctionRepository.findById(id).orElseThrow(() -> new RuntimeException("Auction with id " + id + " not found!"));
     }
 
-    public List<Auction> findAllByCategory (Category category) {
+    public List<Auction> findAllByCategory(Category category) {
         return auctionRepository.findAllByCategory(category);
     }
 
@@ -46,43 +48,52 @@ public class AuctionService {
 
     }
 
-    public List<Auction> findAllOpenAuctions(){
+    public List<Auction> findAllOpenAuctions() {
         List<Purchase> purchases = purchaseService.findAll();
         List<Auction> auctions = findAll();
-        for(Purchase purchase: purchases){
+        for (Purchase purchase : purchases) {
             auctions.remove(purchase.getAuction());
         }
         return auctions;
     }
 
-    public List<Auction> findAllByUser(User loggedUser){
+    public List<Auction> findAllByUser(User loggedUser) {
         return auctionRepository.findAllByUser(loggedUser);
     }
 
-    public List<Auction> findAllPurchasedAuctionsByUser(User loggedUser){
+    public List<Auction> findAllPurchasedAuctionsByUser(User loggedUser) {
         List<Purchase> purchases = purchaseService.findAllByUser(loggedUser);
         ArrayList<Auction> auctions = new ArrayList<>();
-        for(Purchase purchase: purchases){
+        for (Purchase purchase : purchases) {
             auctions.add(purchase.getAuction());
         }
         return auctions;
     }
 
-    public List<Auction> findAllPurchasedAuctions(){
+    public List<Auction> findAllPurchasedAuctions() {
         List<Purchase> purchases = purchaseService.findAll();
         ArrayList<Auction> auctions = new ArrayList<>();
-        for(Purchase purchase: purchases){
+        for (Purchase purchase : purchases) {
             auctions.add(purchase.getAuction());
         }
         return auctions;
     }
 
-    public Set<Auction> findFollowedAuctions(User loggedUser){
-        Observer observer = observerService.findByUser(loggedUser);
-        if (observer==null){
-            return new HashSet<Auction>();
+    public Set<Auction> findFollowedAuctions(User loggedUser) {
+        Observer observer = observerService.findByUser(loggedUser).get();
+        if (observer == null) {
+            return new HashSet<>();
         }
         return observer.getAuctions();
+    }
+
+    public boolean isFollowedByUser(User loggedUser, Long id) {
+        Observer observer = observerService.findByUser(loggedUser).get();
+        if (observer == null) {
+            return false;
+        } else {
+            return observerService.findByUser(loggedUser).get().getAuctions().contains(auctionRepository.findById(id).get());
+        }
     }
 
 }

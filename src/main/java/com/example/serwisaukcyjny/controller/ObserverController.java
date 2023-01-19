@@ -35,20 +35,21 @@ public class ObserverController {
 
         User loggedUser = userService.findByLogin(principal.getName()).get();
         Auction currentAuction = auctionService.findByID(id);
-        currentAuction.setEndDate(LocalDateTime.now());
-
-        if (observerService.existByUser(loggedUser)) {
-            Observer loggedUserObserver = observerService.findByUser(loggedUser);
-            loggedUserObserver.getAuctions().add(currentAuction);
-            observerService.save(loggedUserObserver);
-        } else {
-            Set<Auction> auctions = new HashSet<>();
-            auctions.add(currentAuction);
-            observerService.save(new Observer(auctions, loggedUser));
-        }
+        observerService.saveOrCreateNewObserver(loggedUser, currentAuction);
 
         redirectAttributes.addAttribute("message", "Aukcja dodana do obserwowanych");
         return "redirect:/home/auction/" + id;
     }
 
+    @PostMapping("/unfollow/{id}")
+    public String unfollowAuction(@PathVariable Long id, Principal principal, RedirectAttributes redirectAttributes) {
+        User loggedUser = userService.findByLogin(principal.getName()).get();
+        Auction currentAuction = auctionService.findByID(id);
+        Observer userObserver = observerService.findByUser(loggedUser).get();
+        userObserver.getAuctions().remove(currentAuction);
+        observerService.save(userObserver);
+
+        redirectAttributes.addAttribute("message", "Aukcja usunięta z obserwowanych!");
+        return "redirect:/home/auction/" + id;
+    }
 }

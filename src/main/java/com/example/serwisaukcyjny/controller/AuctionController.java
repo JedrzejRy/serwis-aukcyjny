@@ -107,10 +107,12 @@ public class AuctionController {
 
         Authentication authentication = authenticationFacade.getAuthentication();
 
-        if (!(authentication instanceof AnonymousAuthenticationToken)){
+        if (!(authentication instanceof AnonymousAuthenticationToken)) {
             User loggedUser = userService.findByLogin(principal.getName()).get();
             map.addAttribute("loggedUser", loggedUser);
+            map.addAttribute("isFollowed", auctionService.isFollowedByUser(loggedUser,id));
         }
+        boolean b = false;
         map.addAttribute("bidding", new CreateBiddingForm());
         map.addAttribute("auction", auctionService.findByID(id));
         map.addAttribute("categories", categoryRepository.findAll());

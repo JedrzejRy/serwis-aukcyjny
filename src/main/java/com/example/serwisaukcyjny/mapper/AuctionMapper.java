@@ -17,7 +17,7 @@ public class AuctionMapper {
                 new BigDecimal(form.getBuyNowPrice()),
                 form.isPromotion(),
                 LocalDateTime.now(),
-                LocalDateTime.of(2023, Month.JANUARY, 11, 11, 11),
+                form.getEndDate(),
                 0,
                 form.getCategory(),
                 user,
