@@ -15,7 +15,8 @@ public class Observer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @OneToMany
+    @ManyToMany(targetEntity = Auction.class, cascade = CascadeType.ALL)
+    @JoinColumn(name = "oa_fk", referencedColumnName = "id")
     private Set<Auction> auctions;
     @ManyToOne
     private User user;

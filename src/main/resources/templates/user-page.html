@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/home">Serwis Aukcyjny</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="/home">Strona Główna</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/auction/list">Aukcje</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="/home" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Kategorie
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" th:href="@{/home/auction/list/{id}(id=${category.id})}"
+                               th:each="category : ${categories}" th:text="${category.categoryName}"></a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/home/auction">Nowa aukcja</a>
+                </li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <div sec:authorize="!isAuthenticated()">
+                        <a href="/login" class="btn btn-light btn-small navbar-btn">Logowanie</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="btn-nav" sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-primary btn-small navbar-btn" href="/home/register">Rejestracja</a>
+                    </div>
+                </li>
+                <div class="dropdown"
+                     sec:authorize="isAuthenticated()">
+                    <a aria-expanded="false"
+                       aria-haspopup="true"
+                       class="nav-link dropdown-toggle text-black"
+                       data-bs-toggle="dropdown"
+                       href="#"
+                       id="profileDropdown"
+                       role="button">
+                        <span sec:authentication="name">[USERNAME]</span>
+                    </a>
+                    <ul aria-labelledby="profileDropdown"
+                        class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/profile}">
+                                Mój profil
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/home/auction/my-auctions}">
+                                Moje Aukcje
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/home/auction/followed}">
+                                Obserwowane
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/home/auction/purchased}">
+                                Kupione Aukcje
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger fw-semibold"
+                               th:href="@{/perform-log-out}">
+                                Wyloguj
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="row">
+    <div class="col-4">
+        <div class="list-group" id="list-tab" role="tablist">
+            <a class="list-group-item list-group-item-action active" id="list-profile-list" data-bs-toggle="list"
+               href="#list-profile" role="tab" aria-controls="list-home">Profil</a>
+            <a class="list-group-item list-group-item-action" id="list-my-auctions-list" data-bs-toggle="list"
+               href="#list-my" role="tab" aria-controls="list-profile">Moje aukcje</a>
+            <a class="list-group-item list-group-item-action" id="list-bought-list" data-bs-toggle="list"
+               href="#list-bought" role="tab" aria-controls="list-messages">Kupione</a>
+            <a class="list-group-item list-group-item-action" id="list-followed-list" data-bs-toggle="list"
+               href="#list-followed" role="tab" aria-controls="list-settings">Obserwowane</a>
+            <a class="list-group-item list-group-item-action" id="list-settings-list" data-bs-toggle="list"
+               href="#list-settings" role="tab" aria-controls="list-settings">Ustawienia</a>
+        </div>
+    </div>
+    <div class="col-8">
+        <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="list-profile" role="tabpanel"
+                 aria-labelledby="list-profile-list">
+                <ul class="list-group" th:object="${loggedUser}">
+                    <li class="list-group-item" th:text="${loggedUser.login}"></li>
+                    <li class="list-group-item" th:text="${loggedUser.userName}"></li>
+                    <li class="list-group-item" th:text="${loggedUser.localization.getAddress()}"></li>
+                    <li class="list-group-item" th:text="${loggedUser.localization.getCity()}"></li>
+                    <li class="list-group-item" th:text="${loggedUser.localization.getVoivodeship()}"></li>
+                    <li class="list-group-item" th:text="${loggedUser.role}"></li>
+                    <li class="list-group-item" th:text="${loggedUser.startDate}"></li>
+                </ul>
+            </div>
+            <div class="tab-pane fade" id="list-my" role="tabpanel" aria-labelledby="list-my-auctions-list-list">
+
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col" th:each="myAuction : ${myAuctions}">
+                        <div class="card h-100">
+                            <img th:src="${myAuction.photosImagePath}" class="card-img-top" alt="Auction photo">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${myAuction.title}"></h5>
+                                <p class="card-text" th:text="${myAuction.description}">.</p>
+                                <a th:href="@{/home/auction/__${myAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted" th:text="${myAuction.endDate}"></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="list-bought" role="tabpanel" aria-labelledby="list-bought-list-list">
+
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col" th:each="boughtAuction : ${boughtAuctions}">
+                        <div class="card h-100">
+                            <img th:src="${boughtAuction.photosImagePath}" class="card-img-top" alt="Auction photo">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${boughtAuction.title}"></h5>
+                                <p class="card-text" th:text="${boughtAuction.description}">.</p>
+                                <a th:href="@{/home/auction/__${boughtAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
+
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted" th:text="${boughtAuction.endDate}"></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="list-followed" role="tabpanel" aria-labelledby="list-followed-list-list">
+
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col" th:each="followedAuction : ${followedAuctions}">
+                        <div class="card h-100">
+                            <img th:src="${followedAuction.photosImagePath}" class="card-img-top" alt="Auction photo">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${followedAuction.title}"></h5>
+                                <p class="card-text" th:text="${followedAuction.description}">.</p>
+                                <a th:href="@{/home/auction/__${followedAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
+
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted" th:text="${followedAuction.endDate}"></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="tab-pane fade" id="list-settings" role="tabpanel" aria-labelledby="list-settings-list">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+</body>
+</html>

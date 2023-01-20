@@ -6,6 +6,7 @@ import com.example.serwisaukcyjny.model.Observer;
 import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.ObserverRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.session.Session;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
