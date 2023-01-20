@@ -6,12 +6,9 @@ import com.example.serwisaukcyjny.form.CreateBiddingForm;
 import com.example.serwisaukcyjny.mapper.AuctionMapper;
 import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.Category;
-import com.example.serwisaukcyjny.model.Observer;
 import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.services.AuctionService;
-import com.example.serwisaukcyjny.model.services.ObserverService;
-import com.example.serwisaukcyjny.model.services.PurchaseService;
 import com.example.serwisaukcyjny.model.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -43,8 +40,6 @@ public class AuctionController {
     private final AuctionService auctionService;
     private final CategoryRepository categoryRepository;
     private final UserService userService;
-    private final PurchaseService purchaseService;
-    private final ObserverService observerService;
     private final IAuthenticationFacade authenticationFacade;
 
     @GetMapping
@@ -116,6 +111,7 @@ public class AuctionController {
         map.addAttribute("bidding", new CreateBiddingForm());
         map.addAttribute("auction", auctionService.findByID(id));
         map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("isBought", auctionService.isAlreadyBought(id));
         if (!message.isBlank()) {
             map.addAttribute("message", message);
         }
@@ -158,5 +154,19 @@ public class AuctionController {
         return "auction-list";
     }
 
+    @GetMapping("/user-page-view")
+    public String showUserPageAuctions(ModelMap map, @ModelAttribute("message") String message, Principal principal) {
+        User loggedUser = userService.findByLogin(principal.getName()).get();
+        map.addAttribute("loggedUser", loggedUser);
+        map.addAttribute("myAuctions", auctionService.findAllByUser(loggedUser));
+        map.addAttribute("boughtAuctions", auctionService.findAllPurchasedAuctionsByUser(loggedUser));
+        map.addAttribute("followedAuctions", auctionService.findFollowedAuctions(loggedUser));
+        map.addAttribute("categories", categoryRepository.findAll());
+        if (!message.isBlank()) {
+            map.addAttribute("message", message);
+        }
+
+        return "user-page";
+    }
 
 }

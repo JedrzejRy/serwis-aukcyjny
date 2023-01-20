@@ -7,9 +7,7 @@ import com.example.serwisaukcyjny.mapper.UserMapper;
 import com.example.serwisaukcyjny.model.Role;
 import com.example.serwisaukcyjny.model.Localization;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
-import com.example.serwisaukcyjny.model.repositories.LocalizationRepository;
 import com.example.serwisaukcyjny.model.services.LocalizationService;
-import com.example.serwisaukcyjny.model.services.LoggedUserService;
 import com.example.serwisaukcyjny.model.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +15,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,14 +22,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Slf4j
 @RequiredArgsConstructor
 @RequestMapping("/home/register")
-public class RegisterController {
+public class UserController {
 
     private static final String MESSAGE_KEY = "message";
     private final UserService userService;
-    private final LocalizationRepository localizationRepository;
     private final LocalizationService localizationService;
     private final CategoryRepository categoryRepository;
-    private final LoggedUserService loggedUserService;
+
 
 
     @GetMapping
@@ -73,7 +69,6 @@ public class RegisterController {
         }
         return "user-list";
     }
-
 
 
 }

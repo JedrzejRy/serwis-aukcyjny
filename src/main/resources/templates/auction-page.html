@@ -87,7 +87,7 @@
         </tbody>
     </table>
     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start"
-         th:if="!${auction.user == loggedUser}">
+         th:if="!${auction.user == loggedUser || isBought}">
         <form method="post"
               th:action="@{/home/auction/buy/__${auction.getAuctionId()}__}">
             <button class="btn btn-primary btn-lg px-4 me-sm-3" type="submit">
@@ -117,7 +117,7 @@
 
     <div class="container">
         <form th:action="@{/home/auction/bid/__${auction.getAuctionId()}__}"
-              th:if="!${auction.user == loggedUser}"
+              th:if="!${auction.user == loggedUser || isBought}"
               th:object="${bidding}"
               method="post"
               enctype="multipart/form-data">

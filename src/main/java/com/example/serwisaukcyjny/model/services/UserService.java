@@ -1,5 +1,6 @@
 package com.example.serwisaukcyjny.model.services;
 
+import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -15,12 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class UserService {
-
-
     private final UserRepository userRepository;
-
-    private final ObjectMapper objectMapper;
-
     private final BCryptPasswordEncoder encoder;
 
     public User save(User user) {
@@ -28,21 +24,21 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public List<User> findAll(){
+    public List<User> findAll() {
         return new ArrayList<>(userRepository.findAll());
     }
 
-    public Optional<User> findById(Long id){
+    public Optional<User> findById(Long id) {
         return userRepository.findById(id);
     }
 
-    public Optional<User> findByUserName (String userName){
+    public Optional<User> findByUserName(String userName) {
 
         return userRepository.findByUserName(userName);
 
     }
 
-    public Optional<User> findByLogin (String login){
+    public Optional<User> findByLogin(String login) {
 
         return userRepository.findByLogin(login);
 

@@ -20,7 +20,6 @@ public class AuctionService {
     private final AuctionRepository auctionRepository;
     private final PurchaseService purchaseService;
     private final ObserverService observerService;
-    private final UserService userService;
 
     public List<Auction> findAll() {
         return StreamSupport.stream(auctionRepository.findAll().spliterator(), false)
@@ -80,20 +79,23 @@ public class AuctionService {
     }
 
     public Set<Auction> findFollowedAuctions(User loggedUser) {
-        Observer observer = observerService.findByUser(loggedUser).get();
-        if (observer == null) {
-            return new HashSet<>();
+        if (observerService.findByUser(loggedUser).isPresent()) {
+            return observerService.findByUser(loggedUser).get().getAuctions();
         }
-        return observer.getAuctions();
+        return new HashSet<>();
     }
 
     public boolean isFollowedByUser(User loggedUser, Long id) {
-        Observer observer = observerService.findByUser(loggedUser).get();
-        if (observer == null) {
-            return false;
-        } else {
+        if (observerService.findByUser(loggedUser).isPresent()) {
             return observerService.findByUser(loggedUser).get().getAuctions().contains(auctionRepository.findById(id).get());
+        } else {
+            return false;
         }
+    }
+
+    public boolean isAlreadyBought(Long id) {
+        List<Auction> boughtAuctions = findAllPurchasedAuctions();
+        return boughtAuctions.contains(findByID(id));
     }
 
 }
