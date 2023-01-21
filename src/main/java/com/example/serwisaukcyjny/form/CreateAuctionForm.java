@@ -10,11 +10,19 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.ToString;
+import org.apache.commons.io.FilenameUtils;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.Transient;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.math.BigDecimal;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.stream.IntStream;
 
 @Getter
 @Setter
@@ -45,6 +53,34 @@ public class CreateAuctionForm {
         if (photos == null || title == null) return null;
 
         return "/photos/" + photos;
+    }
+    public void setPhotos(MultipartFile multipartFile) throws IOException {
+        photos = multipartFile.getOriginalFilename();
+        String uploadDir = "/src/main/resources/static/photos/";
+        Path currentPath = Paths.get("."); //on Windows Paths.get(".")
+        Path absolutePath = currentPath.toAbsolutePath();
+        Path filePath = Paths.get(absolutePath + uploadDir + photos);
+        Files.write(filePath, multipartFile.getBytes());
+    }
+
+    public boolean isImage(MultipartFile file) {
+        String extension = FilenameUtils.getExtension(file.getOriginalFilename());
+
+        return Arrays.stream(AllowedExtensions.values())
+                .anyMatch(e -> e.toString().equalsIgnoreCase(extension));
+    }
+
+    public String wrongFileExtensionMessage() {
+        StringBuilder messageSB = new StringBuilder("Plik musi być zdjęciem w formacie: ");
+        AllowedExtensions[] extensions = AllowedExtensions.values();
+        IntStream.range(0, extensions.length)
+                .mapToObj(i -> extensions[i] + (i < extensions.length - 1 ? ", " : ""))
+                .forEach(messageSB::append);
+        return messageSB.toString();
+    }
+
+    private enum AllowedExtensions {
+        JPG, JPEG, PNG
     }
 
 }

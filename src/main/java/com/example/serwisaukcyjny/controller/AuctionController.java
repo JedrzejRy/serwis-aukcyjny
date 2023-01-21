@@ -57,14 +57,13 @@ public class AuctionController {
             return "creator";
         }
 
-        String fileName = StringUtils.cleanPath(multipartFile.getOriginalFilename());
-        form.setPhotos(fileName);
-        String uploadDir = "/src/main/resources/static/photos/";
-        Path currentPath = Paths.get("."); //on Windows Paths.get(".")
-        Path absolutePath = currentPath.toAbsolutePath();
-        Path filePath = Paths.get(absolutePath + uploadDir + fileName);
-        Files.write(filePath, multipartFile.getBytes());
+        if (multipartFile.isEmpty() || !form.isImage(multipartFile)) {
+            redirectAttributes.addFlashAttribute("wrongFileExtension",
+                    form.wrongFileExtensionMessage());
+            return "redirect:/home/auction";
+        }
 
+        form.setPhotos(multipartFile);
         User loggedUser = userService.findByLogin(principal.getName()).get();
 
         auctionService.save(AuctionMapper.toEntity(form, loggedUser, loggedUser.getLocalization()));

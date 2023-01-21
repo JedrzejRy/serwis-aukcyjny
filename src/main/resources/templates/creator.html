@@ -48,7 +48,9 @@
     </div>
 </nav>
 
+
 <div class="container">
+    <div class="text-danger" th:text="${wrongFileExtension}"></div>
     <form th:object="${auction}" th:action="@{/home/auction}" method="post" enctype="multipart/form-data">
         <div class="mb-3">
             <label for="title" class="form-label">Tytuł:</label>
