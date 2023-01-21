@@ -23,4 +23,8 @@ public class BiddingService {
         return repository.findAllByUser(user);
     }
 
+    public List<Bidding> findAll() {
+        return repository.findAll();
+    }
+
 }

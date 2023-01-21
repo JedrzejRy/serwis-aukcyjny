@@ -1,6 +1,7 @@
 package com.example.serwisaukcyjny.model.services;
 
 import com.example.serwisaukcyjny.model.*;
+import com.example.serwisaukcyjny.model.Observer;
 import com.example.serwisaukcyjny.model.repositories.AuctionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -29,9 +30,22 @@ public class AuctionService {
         return auctionRepository.save(auction);
     }
 
-    public void delete(Long id) {
-        auctionRepository.deleteById(id);
+    public boolean delete(Long id, User loggedUser) {
+        Auction auction = auctionRepository.findById(id).get();
+        if (auction.getUser() == loggedUser && !isBidded(id)){
+            Iterable<Observer> observers = observerService.findAll();
+            observers.forEach(observer -> observer.getAuctions().remove(auctionRepository.findById(id).get()));
+            auctionRepository.deleteById(id);
+            return true;
+        }
+        return false;
     }
+    public boolean isBidded(long id) {
+        List<Bidding> biddings = biddingService.findAll();
+        Auction auction = auctionRepository.findById(id).get();
+        return biddings.stream().map(Bidding::getAuction).toList().contains(auction);
+    }
+
 
     public Auction findByID(Long id) {
         return auctionRepository.findById(id).orElseThrow(() -> new RuntimeException("Auction with id " + id + " not found!"));

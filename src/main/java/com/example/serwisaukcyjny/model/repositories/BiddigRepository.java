@@ -10,4 +10,6 @@ import java.util.List;
 public interface BiddigRepository extends CrudRepository<Bidding, Long> {
 
   List<Bidding> findAllByUser(User user);
+
+  List<Bidding> findAll();
 }

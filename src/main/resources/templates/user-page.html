@@ -102,6 +102,13 @@
     </div>
 </nav>
 
+<div class="alert alert-success alert-dismissible fade show"
+     role="alert"
+     th:if="${!message.isBlank()}"
+     th:text="${message}">
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
 <div class="row">
     <div class="col-4">
         <div class="list-group" id="list-tab" role="tablist">
@@ -141,6 +148,7 @@
                                 <h5 class="card-title" th:text="${myAuction.title}"></h5>
                                 <p class="card-text" th:text="${myAuction.description}">.</p>
                                 <a th:href="@{/home/auction/__${myAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
+                                <a th:href="@{/home/auction/delete/__${myAuction.getAuctionId()}__}" class="btn btn-danger">Usuń aukcje</a>
                             </div>
                             <div class="card-footer">
                                 <small class="text-muted" th:text="${myAuction.endDate}"></small>

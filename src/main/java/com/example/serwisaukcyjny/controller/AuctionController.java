@@ -167,4 +167,15 @@ public class AuctionController {
         return "user-page";
     }
 
+    @GetMapping("/delete/{id}")
+    public String deleteAuction(@PathVariable("id") Long id ,Principal principal, RedirectAttributes redirectAttributes, @ModelAttribute("message") String message){
+        User loggedUser = userService.findByLogin(principal.getName()).get();
+        if (auctionService.delete(id,loggedUser)){
+            redirectAttributes.addAttribute("message", "Aukcja pomyśle usunięta");
+        } else {
+            redirectAttributes.addAttribute("message", "Nie można usunąc aukcji która jest licytowana!");
+        }
+        return "redirect:/home/auction/user-page-view";
+    }
+
 }
