@@ -1,11 +1,13 @@
 package com.example.serwisaukcyjny.controller;
 
+import com.example.serwisaukcyjny.form.CreateAuctionForm;
 import com.example.serwisaukcyjny.form.CreateLocalizationForm;
 import com.example.serwisaukcyjny.form.CreateUserForm;
 import com.example.serwisaukcyjny.mapper.LocalizationMapper;
 import com.example.serwisaukcyjny.mapper.UserMapper;
 import com.example.serwisaukcyjny.model.Role;
 import com.example.serwisaukcyjny.model.Localization;
+import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.services.LocalizationService;
 import com.example.serwisaukcyjny.model.services.UserService;
@@ -17,6 +19,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import java.security.Principal;
 
 @Controller
 @Slf4j

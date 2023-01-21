@@ -101,5 +101,103 @@
         </div>
     </div>
 </nav>
+
+<div class="container" th:if="${!userAuctions.isEmpty()}" sec:authorize="isAuthenticated()">
+    <p class="h3">Moje Aukcje</p>
+    <div class="row row-cols-5 row-cols-md-5 g-4">
+        <div class="col" th:each="auction : ${userAuctions}">
+            <div class="card">
+                <img th:src="${auction.photosImagePath}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${auction.title}"></h5>
+                    <p class="card-text" th:text="${auction.description}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" th:if="${!followedAuctions.isEmpty()}" sec:authorize="isAuthenticated()">
+    <p class="h3">Obserwowane Aukcje</p>
+    <div class="row row-cols-5 row-cols-md-5 g-4">
+        <div class="col" th:each="auction : ${followedAuctions}">
+            <div class="card">
+                <img th:src="${auction.photosImagePath}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${auction.title}"></h5>
+                    <p class="card-text" th:text="${auction.description}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" th:if="${!biddingAuctions.isEmpty()}" sec:authorize="isAuthenticated()">
+    <p class="h3">Licytowane Aukcje</p>
+    <div class="row row-cols-5 row-cols-md-5 g-4">
+        <div class="col" th:each="auction : ${biddingAuctions}">
+            <div class="card">
+                <img th:src="${auction.photosImagePath}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${auction.title}"></h5>
+                    <p class="card-text" th:text="${auction.description}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <p class="h3">Nowe Aukcje</p>
+    <div class="row row-cols-5 row-cols-md-5 g-4">
+        <div class="col" th:each="auction : ${newAuctions}">
+            <div class="card">
+                <img th:src="${auction.photosImagePath}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${auction.title}"></h5>
+                    <p class="card-text" th:text="${auction.description}"></p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted" th:text="${auction.dateOfIssue}"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <p class="h3">Kończące się aukcje</p>
+    <div class="row row-cols-5 row-cols-md-5 g-4">
+        <div class="col" th:each="auction : ${endingAuctions}">
+            <div class="card">
+                <img th:src="${auction.photosImagePath}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${auction.title}"></h5>
+                    <p class="card-text" th:text="${auction.description}"></p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted" th:text="${auction.endDate}"></small>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container" th:if="${!purchasedAuctions.isEmpty()}">
+    <p class="h3">Zakończone aukcje</p>
+    <div class="row row-cols-5 row-cols-md-5 g-4">
+        <div class="col" th:each="auction : ${purchasedAuctions}">
+            <div class="card">
+                <img th:src="${auction.photosImagePath}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title" th:text="${auction.title}"></h5>
+                    <p class="card-text" th:text="${auction.description}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 </body>
 </html>

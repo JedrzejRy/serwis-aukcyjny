@@ -107,7 +107,6 @@ public class AuctionController {
             map.addAttribute("loggedUser", loggedUser);
             map.addAttribute("isFollowed", auctionService.isFollowedByUser(loggedUser,id));
         }
-        boolean b = false;
         map.addAttribute("bidding", new CreateBiddingForm());
         map.addAttribute("auction", auctionService.findByID(id));
         map.addAttribute("categories", categoryRepository.findAll());

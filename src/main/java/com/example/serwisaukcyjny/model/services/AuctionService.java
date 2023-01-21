@@ -6,10 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -20,6 +17,8 @@ public class AuctionService {
     private final AuctionRepository auctionRepository;
     private final PurchaseService purchaseService;
     private final ObserverService observerService;
+
+    private final BiddingService biddingService;
 
     public List<Auction> findAll() {
         return StreamSupport.stream(auctionRepository.findAll().spliterator(), false)
@@ -96,6 +95,23 @@ public class AuctionService {
     public boolean isAlreadyBought(Long id) {
         List<Auction> boughtAuctions = findAllPurchasedAuctions();
         return boughtAuctions.contains(findByID(id));
+    }
+
+    public List<Auction> findAllBiddingAuctionsByUser(User loggedUser) {
+        List<Bidding> bindings = biddingService.findAllByUser(loggedUser);
+        List<Auction> auctions = new ArrayList<>();
+        for (Bidding bidding : bindings){
+          auctions.add(bidding.getAuction());
+        }
+        return auctions;
+    }
+
+    public List<Auction> findTenNewAuctions() {
+        return findAllOpenAuctions().stream().sorted(Comparator.comparing(Auction::getDateOfIssue).reversed()).limit(10L).collect(Collectors.toList());
+    }
+
+    public List<Auction> findTenEndingAuctions() {
+        return findAllOpenAuctions().stream().sorted(Comparator.comparing(Auction::getEndDate)).limit(10L).collect(Collectors.toList());
     }
 
 }
