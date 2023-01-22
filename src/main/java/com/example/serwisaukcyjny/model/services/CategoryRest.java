@@ -1,17 +1,23 @@
 package com.example.serwisaukcyjny.model.services;
 
 import com.example.serwisaukcyjny.model.Category;
+import com.example.serwisaukcyjny.model.Role;
+import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
+import com.example.serwisaukcyjny.model.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryRepositoryService implements CommandLineRunner {
+public class CategoryRest implements CommandLineRunner {
 
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -31,6 +37,10 @@ public class CategoryRepositoryService implements CommandLineRunner {
             categoryRepository.save(new Category("Kolekcje i sztuka"));
             categoryRepository.save(new Category("Firma i usługi"));
         }
+        if (!userRepository.existsByLogin("Admin@admin.pl")){
+            userRepository.save(new User("Admin@admin.pl", "Admin", "Admin123", LocalDateTime.now(), Role.ADMIN,null));
+        }
+
     }
 
 

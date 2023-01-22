@@ -1,7 +1,6 @@
 package com.example.serwisaukcyjny.controller;
 
 import com.example.serwisaukcyjny.authentication.IAuthenticationFacade;
-import com.example.serwisaukcyjny.form.CreateAuctionForm;
 import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.services.AuctionService;
@@ -25,6 +24,7 @@ public class HomeController {
     private final AuctionService auctionService;
     private final UserService userService;
     private final IAuthenticationFacade authenticationFacade;
+
 
     @GetMapping
     public String categoriesList(ModelMap map, Principal principal) {

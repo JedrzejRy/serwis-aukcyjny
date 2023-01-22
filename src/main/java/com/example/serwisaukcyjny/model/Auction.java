@@ -42,7 +42,7 @@ public class Auction {
     Category category;
     @ManyToOne
     User user;
-    @ManyToOne
+    @OneToOne
     Localization localization;
 
     public Auction(String title, String description, BigDecimal minimumPrice, BigDecimal buyNowPrice, boolean promotion, LocalDateTime dateOfIssue, LocalDateTime endDate, int views, Category category, User user, Localization localization, String photos) {

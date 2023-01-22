@@ -7,6 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 public interface AuctionRepository extends CrudRepository<Auction,Long> {
     List<Auction> findAllByTitle(String title);
@@ -15,5 +16,4 @@ public interface AuctionRepository extends CrudRepository<Auction,Long> {
     List<Auction> findAllByCategory(Category category);
 
     List<Auction> findAllByUser(User user);
-
 }
