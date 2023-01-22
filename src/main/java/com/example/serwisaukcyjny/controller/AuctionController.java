@@ -98,8 +98,7 @@ public class AuctionController {
     }
 
     @GetMapping("/{id}")
-    public String AuctionPage(@PathVariable Long id, ModelMap map, @ModelAttribute("message") String message, Principal principal) {
-
+    public String AuctionPage(@PathVariable Long id, ModelMap map, @ModelAttribute("message") String message, Principal principal, Errors errors) {
         Authentication authentication = authenticationFacade.getAuthentication();
 
         if (!(authentication instanceof AnonymousAuthenticationToken)) {

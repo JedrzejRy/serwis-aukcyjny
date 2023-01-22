@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <title>Lista aukcji</title>
@@ -47,95 +47,83 @@
         </div>
     </div>
 </nav>
-<div class="container">
-    <div class="alert alert-success alert-dismissible fade show"
-         role="alert"
-         th:if="${!message.isBlank()}"
-         th:text="${message}">
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>Tytuł</th>
-            <th>Zdjęcia</th>
-            <th>Opis</th>
-            <th>Cena minimalna</th>
-            <th>Cena kup teraz</th>
-            <th>Kategoria</th>
-            <th>Promowany</th>
-            <th>Data wystawiena</th>
-            <th>Data zakończenia</th>
-            <th></th>
-            <th></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="auction : ${auction}">
-            <td th:text="${auction.title}"></td>
-            <td class="w-25">
-                <img th:src="${auction.photosImagePath}" class="img-fluid img-thumbnail">
-            </td>
-            <td th:text="${auction.description}"></td>
-            <td th:text="${auction.minimumPrice}"></td>
-            <td th:text="${auction.buyNowPrice}"></td>
-            <td th:text="${auction.category.categoryName}"></td>
-            <td th:text="${auction.promotion}"></td>
-            <td th:text="${auction.dateOfIssue}"></td>
-            <td th:text="${auction.endDate}"></td>
-        </tr>
-        </tbody>
-    </table>
-    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start"
-         th:if="!${auction.user == loggedUser || isBought}">
-        <form method="post"
-              th:action="@{/home/auction/buy/__${auction.getAuctionId()}__}">
-            <button class="btn btn-primary btn-lg px-4 me-sm-3" type="submit">
-                Kup teraz
-            </button>
-        </form>
-    </div>
-    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start"
-         th:if="!${auction.user == loggedUser || isFollowed || isBought}">
-        <form method="post"
-              th:action="@{/home/auction/follow/__${auction.getAuctionId()}__}">
-            <button class="btn btn-primary btn-lg px-4 me-sm-3" type="submit">
-                Obserwuj
-            </button>
-        </form>
-    </div>
 
-    <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start"
-         th:if="!${auction.user == loggedUser || !isFollowed}">
-        <form method="post"
-              th:action="@{/home/auction/follow/unfollow/__${auction.getAuctionId()}__}">
-            <button class="btn btn-primary btn-lg px-4 me-sm-3" type="submit">
-                Przestań obserwować
-            </button>
-        </form>
-    </div>
-
-    <div class="container">
-        <form th:action="@{/home/auction/bid/__${auction.getAuctionId()}__}"
-              th:if="!${auction.user == loggedUser || isBought}"
-              th:object="${bidding}"
-              method="post"
-              enctype="multipart/form-data">
-            <div class="mb-3">
-                <label for="price" class="form-label">Cena:</label>
-                <input id="price" type="number" th:field="*{price}" class="form-control"/>
-                <div
-                        th:if="${#fields.hasErrors('price')}"
-                        th:text="${#fields.errors('price')[0]}"
-                        class="invalid-feedback-custom">
+<header class="bg-dark py-5">
+    <div class="container px-5">
+        <div class="alert alert-success alert-dismissible fade show"
+             role="alert"
+             th:if="${!message.isBlank()}"
+             th:text="${message}">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end"
+                 th:if="!${auction.user == loggedUser || isFollowed || isBought}">
+                <form method="post"
+                      th:action="@{/home/auction/follow/__${auction.getAuctionId()}__}">
+                    <button class="btn btn-warning btn-lg px-4 me-sm-3" type="submit">
+                        Obserwuj
+                    </button>
+                </form>
+            </div>
+            <div class="d-grid gap-2 d-md-flex justify-content-md-end"
+                 th:if="!${auction.user == loggedUser || !isFollowed}">
+                <form method="post"
+                      th:action="@{/home/auction/follow/unfollow/__${auction.getAuctionId()}__}">
+                    <button class="btn btn-danger btn-lg px-4 me-sm-3" type="submit">
+                        Przestań obserwować
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="row gx-5 align-items-start justify-content-lg-end">
+            <div class="col-lg-8 col-xl-7 col-xxl-6">
+                <div class="my-5 text-center text-xl-start">
+                    <h1 class=" text-break display-1 fw-bolder text-white mb-2" th:text="${auction.title}"></h1>
+                    <h4 class="display-6 fw-bolder text-white mb-2"
+                        th:text="${#strings.concat(auction.buyNowPrice,'PLN', ' - ', 'Cena kup teraz')}"></h4>
+                    <h4 class="display-6 fw-bolder text-white mb-2"
+                        th:text="${#strings.concat(auction.minimumPrice,'PLN' , ' - ', 'Aktualna licytacja')}"></h4>
+                    <p class=" text-break lead fw-normal text-white-50 mb-4" th:text="${auction.description}"></p>
+                </div>
+                <div class="d-grid gap-3 d-sm-flex" >
+                    <div class="justify-content-sm-start justify-content-xl-start"
+                         th:if="!${auction.user == loggedUser || isBought}">
+                        <form method="post"
+                              th:action="@{/home/auction/buy/__${auction.getAuctionId()}__}">
+                            <button class="btn btn-secondary btn-lg px-4 me-sm-3" type="submit">Kup teraz
+                            </button>
+                        </form>
+                    </div>
+                    <div class="justify-content-sm-end justify-content-xl-end"
+                         th:if="!${auction.user == loggedUser || isBought}">
+                        <form method="post"
+                              th:action="@{/home/auction/bid/__${auction.getAuctionId()}__}"
+                              th:object="${bidding}"
+                              enctype="multipart/form-data">
+                            <button class="btn btn-secondary btn-lg px-4 me-sm-3" type="submit">
+                                Licytuj
+                            </button>
+                            <div class="mb-3">
+                                <label for="price" class="form-label"></label>
+                                <input id="price" type="number" th:field="*{price}" class="form-control"/>
+                                <div
+                                        th:if="${#fields.hasErrors('price')}"
+                                        th:text="${#fields.errors('price')[0]}"
+                                        class="invalid-feedback-custom">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div>
-                <button type="submit" class="btn btn-primary">Licytuj</button>
+            <div class="col-xl-5 col-xxl-4 d-none d-xl-block text-end">
+                <img alt="..." class="img-fluid rounded-4 my-5" th:src="${auction.photosImagePath}"/>
             </div>
-        </form>
+            <h4 class="display-9 fw-semibold text-danger mb-2 text-center"
+                th:text="${#strings.concat('Aukcja kończy się ', auction.endDate)}"></h4>
+        </div>
     </div>
-</div>
-
+</header>
 </body>
 </html>

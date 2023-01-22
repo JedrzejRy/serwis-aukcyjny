@@ -19,4 +19,7 @@ public interface BiddigRepository extends CrudRepository<Bidding, Long> {
   void deleteAllByAuction(Auction auction);
 
   List<Bidding> findAllByAuction(Auction auction);
+
+  Bidding findByAuctionAndUser(Auction auction, User  user);
+  boolean existsByAuctionAndUser(Auction auction, User  user);
 }
