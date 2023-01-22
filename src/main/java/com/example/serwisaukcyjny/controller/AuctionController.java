@@ -100,7 +100,9 @@ public class AuctionController {
     @GetMapping("/{id}")
     public String AuctionPage(@PathVariable Long id, ModelMap map, @ModelAttribute("message") String message, Principal principal, Errors errors) {
         Authentication authentication = authenticationFacade.getAuthentication();
-
+        Auction currentAuction = auctionService.findByID(id);
+        currentAuction.setViews(currentAuction.getViews()+1);
+        auctionService.save(currentAuction);
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             User loggedUser = userService.findByLogin(principal.getName()).get();
             map.addAttribute("loggedUser", loggedUser);

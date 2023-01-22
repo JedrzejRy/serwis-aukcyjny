@@ -7,10 +7,4 @@ import java.util.List;
 
 public interface LocalizationRepository extends CrudRepository<Localization, Long> {
 
-
-    List<Localization> findByCity(String city);
-    List<Localization> findByVoivodeship(String voivodeship);
-
-
-
 }

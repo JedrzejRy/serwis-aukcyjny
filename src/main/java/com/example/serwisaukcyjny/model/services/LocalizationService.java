@@ -22,16 +22,6 @@ public class LocalizationService {
                 .collect(toList());
     }
 
-    public List<Localization> findByCity(String city){
-        return StreamSupport.stream(repository.findByCity(city).spliterator(), false)
-                .collect(toList());
-    }
-
-    public List<Localization> findByVoivodeship(String voivodeship){
-        return StreamSupport.stream(repository.findByVoivodeship(voivodeship).spliterator(), false)
-                .collect(toList());
-    }
-
     public Localization save(Localization localization) {return repository.save(localization);}
 
 

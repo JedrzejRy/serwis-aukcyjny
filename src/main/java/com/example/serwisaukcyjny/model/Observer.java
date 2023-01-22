@@ -15,7 +15,7 @@ public class Observer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    @ManyToMany(targetEntity = Auction.class, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToMany(targetEntity = Auction.class, cascade = CascadeType.DETACH, fetch = FetchType.EAGER)
     @ToString.Exclude
     private Set<Auction> auctions;
     @ManyToOne

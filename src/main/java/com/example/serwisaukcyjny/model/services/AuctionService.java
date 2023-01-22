@@ -147,16 +147,15 @@ public class AuctionService {
         return findAllOpenAuctions().stream().sorted(Comparator.comparing(Auction::getEndDate)).limit(10L).collect(Collectors.toList());
     }
 
-    @Scheduled(fixedDelay = 44444, timeUnit = TimeUnit.SECONDS)
+    @Scheduled(fixedDelay = 1, timeUnit = TimeUnit.MINUTES)
     public void endAuctionsAfterTime() {
         List<Auction> auctions = findAllOpenAuctions();
         if (auctions != null) {
             for (Auction auction : auctions) {
                 List<Bidding> biddings = biddingService.findAllByAuction(auction);
                 if (auction.getEndDate().isBefore(LocalDateTime.now()) && !biddings.isEmpty() && !purchaseService.existByAuction(auction)) {
-                    Bidding bidding = biddingService.findAllByAuction(auction).stream().min(Comparator.comparing(Bidding::getPrice)).get();
+                    Bidding bidding = biddingService.findAllByAuction(auction).stream().max(Comparator.comparing(Bidding::getPrice)).get();
                     purchaseService.save(bidding.toPurchase());
-                    biddingService.deleteAllByAuction(auction);
                 } else if (auction.getEndDate().isBefore(LocalDateTime.now()) && biddings.isEmpty() && !purchaseService.existByAuction(auction)) {
                     purchaseService.save(new Purchase(auction, userService.findByLogin("Admin@admin.pl").get(), auction.getBuyNowPrice()));
                 }

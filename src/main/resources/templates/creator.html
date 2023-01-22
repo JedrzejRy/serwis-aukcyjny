@@ -118,6 +118,11 @@
         <div class="mb-3">
             <label for="description" class="form-label">Opis:</label>
             <textarea id="description" type="text" th:field="*{description}" class="form-control" rows="3"></textarea>
+            <div
+                    th:if="${#fields.hasErrors('description')}"
+                    th:text="${#fields.errors('description')[0]}"
+                    class="invalid-feedback-custom">
+            </div>
         </div>
         <div class="mb-3">
             <label for="minimumPrice" class="form-label">Cena minimalna:</label>

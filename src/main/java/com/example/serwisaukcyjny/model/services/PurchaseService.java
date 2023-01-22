@@ -7,6 +7,7 @@ import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.PurchaseRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +22,13 @@ public class PurchaseService {
 
     private final ObserverService observerService;
 
+    private final BiddingService biddingService;
+
+    @Transactional
     public Purchase save(Purchase purchase) {
         Iterable<Observer> observers = observerService.findAll();
         observers.forEach(observer -> observer.getAuctions().remove(purchase.getAuction()));
+        biddingService.deleteAllByAuction(purchase.getAuction());
         return repository.save(purchase);
     }
 

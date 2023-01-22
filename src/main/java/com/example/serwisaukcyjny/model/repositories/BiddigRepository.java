@@ -22,4 +22,5 @@ public interface BiddigRepository extends CrudRepository<Bidding, Long> {
 
   Bidding findByAuctionAndUser(Auction auction, User  user);
   boolean existsByAuctionAndUser(Auction auction, User  user);
+
 }
