@@ -45,7 +45,7 @@ public class AuctionService {
 
     public boolean delete(Long id, User loggedUser) {
         Auction auction = auctionRepository.findById(id).get();
-        if (auction.getUser() == loggedUser && !isBidded(id)) {
+        if (auction.getUser() == loggedUser && !isBidded(id) && !isAlreadyBought(id)) {
             Iterable<Observer> observers = observerService.findAll();
             observers.forEach(observer -> observer.getAuctions().remove(auctionRepository.findById(id).get()));
             auctionRepository.deleteById(id);
@@ -82,6 +82,16 @@ public class AuctionService {
         List<Auction> auctions = findAll();
         auctions.removeAll(findAllPurchasedAuctions());
         return auctions;
+    }
+
+    public List<Auction> findAllOpenAuctionsByUser(User loggedUser) {
+        List<Auction> auctions = findAllByUser(loggedUser);
+        auctions.removeAll(findAllPurchasedAuctions());
+        return auctions;
+    }
+
+    public List<Auction> findAllSoldAuctionsByUser(User loggedUser) {
+        return findAllPurchasedAuctions().stream().filter(auction -> auction.getUser() == loggedUser).collect(Collectors.toList());
     }
 
     public List<Auction> findAllByUser(User loggedUser) {
@@ -148,7 +158,7 @@ public class AuctionService {
                     purchaseService.save(bidding.toPurchase());
                     biddingService.deleteAllByAuction(auction);
                 } else if (auction.getEndDate().isBefore(LocalDateTime.now()) && biddings.isEmpty() && !purchaseService.existByAuction(auction)) {
-                    purchaseService.save(new Purchase(auction, userService.findById(4L).get(), auction.getBuyNowPrice()));
+                    purchaseService.save(new Purchase(auction, userService.findByLogin("Admin@admin.pl").get(), auction.getBuyNowPrice()));
                 }
             }
         }

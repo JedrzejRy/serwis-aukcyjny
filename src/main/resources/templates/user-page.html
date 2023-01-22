@@ -115,7 +115,9 @@
             <a class="list-group-item list-group-item-action active" id="list-profile-list" data-bs-toggle="list"
                href="#list-profile" role="tab" aria-controls="list-home">Profil</a>
             <a class="list-group-item list-group-item-action" id="list-my-auctions-list" data-bs-toggle="list"
-               href="#list-my" role="tab" aria-controls="list-profile">Moje aukcje</a>
+               href="#list-my" role="tab" aria-controls="list-profile">Moje aktywne aukcje</a>
+            <a class="list-group-item list-group-item-action" id="list-my-sold-auctions-list" data-bs-toggle="list"
+               href="#list-my-sold" role="tab" aria-controls="list-profile">Moje sprzedane aukcje</a>
             <a class="list-group-item list-group-item-action" id="list-bought-list" data-bs-toggle="list"
                href="#list-bought" role="tab" aria-controls="list-messages">Kupione</a>
             <a class="list-group-item list-group-item-action" id="list-bidded-list" data-bs-toggle="list"
@@ -159,6 +161,26 @@
                     </div>
                 </div>
             </div>
+
+            <div class="tab-pane fade" id="list-my-sold" role="tabpanel" aria-labelledby="list-my-auctions-list-list">
+
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                    <div class="col" th:each="myAuction : ${soldAuctions}">
+                        <div class="card h-100">
+                            <img th:src="${myAuction.photosImagePath}" class="card-img-top" alt="Auction photo">
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${myAuction.title}"></h5>
+                                <p class="card-text" th:text="${myAuction.description}">.</p>
+                                <a th:href="@{/home/auction/__${myAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted" th:text="${myAuction.endDate}"></small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="tab-pane fade" id="list-bought" role="tabpanel" aria-labelledby="list-bought-list-list">
 
                 <div class="row row-cols-1 row-cols-md-3 g-4">

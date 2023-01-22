@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryRest implements CommandLineRunner {
+public class RestService implements CommandLineRunner {
 
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;

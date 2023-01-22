@@ -157,7 +157,8 @@ public class AuctionController {
     public String showUserPageAuctions(ModelMap map, @ModelAttribute("message") String message, Principal principal) {
         User loggedUser = userService.findByLogin(principal.getName()).get();
         map.addAttribute("loggedUser", loggedUser);
-        map.addAttribute("myAuctions", auctionService.findAllByUser(loggedUser));
+        map.addAttribute("myAuctions", auctionService.findAllOpenAuctionsByUser(loggedUser));
+        map.addAttribute("soldAuctions", auctionService.findAllSoldAuctionsByUser(loggedUser));
         map.addAttribute("boughtAuctions", auctionService.findAllPurchasedAuctionsByUser(loggedUser));
         map.addAttribute("followedAuctions", auctionService.findFollowedAuctions(loggedUser));
         map.addAttribute("biddedAuctions", auctionService.findAllBiddingAuctionsByUser(loggedUser));
@@ -175,7 +176,7 @@ public class AuctionController {
         if (auctionService.delete(id,loggedUser)){
             redirectAttributes.addAttribute("message", "Aukcja pomyśle usunięta");
         } else {
-            redirectAttributes.addAttribute("message", "Nie można usunąc aukcji która jest licytowana!");
+            redirectAttributes.addAttribute("message", "Nie można usunąc aukcji która jest licytowana lub sprzedana!");
         }
         return "redirect:/home/auction/user-page-view";
     }
