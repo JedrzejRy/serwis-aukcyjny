@@ -16,7 +16,6 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -33,6 +32,7 @@ public class CreateAuctionForm {
 
     @NotBlank (message = "aukcja musi mieć tytuł")
     private String title;
+    @Length(max = 500, message = "Opisz nie może przekraczać 500 znaków")
     private String description;
     @Positive(message = "Wartość musi być dodatnia")
     private int minimumPrice;

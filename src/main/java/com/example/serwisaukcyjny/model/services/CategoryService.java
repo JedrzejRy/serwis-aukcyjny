@@ -25,10 +25,8 @@ public class CategoryService {
                 .collect(toList());
     }
 
-    public List<Category> findByCategory(Long id){
-        return repository.findAllById(id);
 
-    }
+
 }
 
 

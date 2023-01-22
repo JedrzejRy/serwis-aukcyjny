@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {AuctionDurationValidator.class})
 public @interface AuctionDuration {
-    String message() default "{com.sda.eventapp.web.mvc.form.validation.constraints.EventPastTime.message}";
+    String message() default "{com.example.serwisaukcyjny.web.mvc.form.validation.constraints.AuctionDuration.message}";
 
     Class<?>[] groups() default {};
 

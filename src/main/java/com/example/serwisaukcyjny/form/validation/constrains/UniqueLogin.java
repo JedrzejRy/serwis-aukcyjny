@@ -13,7 +13,7 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = {UniqueLoginValidator.class})
 public @interface UniqueLogin {
-    String message() default "{com.example.serwisaukcyjny.web.mvc.form.validation.constraints.UniqueEmail.message}";
+    String message() default "{com.example.serwisaukcyjny.web.mvc.form.validation.constraints.UniqueLogin.message}";
 
     Class<?>[] groups() default {};
 

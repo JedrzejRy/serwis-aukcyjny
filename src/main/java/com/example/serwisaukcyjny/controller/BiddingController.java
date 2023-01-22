@@ -38,9 +38,11 @@ public class BiddingController {
 
         if (newBidding.getPrice().intValue() > currentAuction.getMinimumPrice().intValue()
                 && newBidding.getPrice().intValue() < currentAuction.getBuyNowPrice().intValue()) {
+
             currentAuction.setMinimumPrice(newBidding.getPrice());
-            biddingService.save(newBidding,loggedUser,currentAuction);
+            biddingService.save(newBidding, loggedUser, currentAuction);
             redirectAttributes.addAttribute("message", "Założono licytację o wysokości " + newBidding.getPrice() + "PLN");
+
         } else if (newBidding.getPrice().intValue() > currentAuction.getBuyNowPrice().intValue()) {
             redirectAttributes.addAttribute("message", "Kwota licytacji musi być niższa od ceny kup teraz");
         } else {

@@ -37,13 +37,6 @@ public class BiddingService {
         return repository.findAll();
     }
 
-    public Optional<Bidding> findHighestAuctionBidder(Auction auction) {
-        if (!repository.findAllByAuctionOrderByPrice(auction).isEmpty()) {
-            return Optional.of(repository.findAllByAuctionOrderByPrice(auction).get(0));
-        } else {
-            return Optional.empty();
-        }
-    }
 
     public List<Bidding> findAllByAuction(Auction auction) {
         return repository.findAllByAuction(auction);
