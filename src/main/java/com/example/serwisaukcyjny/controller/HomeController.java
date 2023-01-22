@@ -37,7 +37,7 @@ public class HomeController {
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             User loggedUser = userService.findByLogin(principal.getName()).get();
             map.addAttribute("loggedUser", loggedUser);
-            map.addAttribute("userAuctions", auctionService.findAllByUser(loggedUser));
+            map.addAttribute("userAuctions", auctionService.findAllOpenAuctionsByUser(loggedUser));
             map.addAttribute("followedAuctions", auctionService.findFollowedAuctions(loggedUser));
             map.addAttribute("biddingAuctions", auctionService.findAllBiddingAuctionsByUser(loggedUser));
         }

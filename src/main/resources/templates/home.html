@@ -103,7 +103,7 @@
 </nav>
 
 <div class="container" th:if="${!userAuctions.isEmpty()}" sec:authorize="isAuthenticated()">
-    <p class="h3">Moje Aukcje</p>
+    <p class="h3">Moje aktywne aukcje</p>
     <div class="row row-cols-5 row-cols-md-5 g-4">
         <div class="col" th:each="auction : ${userAuctions}">
             <div class="card">
