@@ -31,4 +31,8 @@ public class Bidding {
         this.auction = auction;
         this.user = user;
     }
+
+    public Purchase toPurchase(){
+        return new Purchase(auction,user,price);
+    }
 }

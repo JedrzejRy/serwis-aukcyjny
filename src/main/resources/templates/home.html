@@ -111,6 +111,7 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${auction.title}"></h5>
                     <p class="card-text" th:text="${auction.description}"></p>
+                    <a th:href="@{/home/auction/__${auction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
                 </div>
             </div>
         </div>
@@ -126,6 +127,7 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${auction.title}"></h5>
                     <p class="card-text" th:text="${auction.description}"></p>
+                    <a th:href="@{/home/auction/__${auction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
                 </div>
             </div>
         </div>
@@ -141,13 +143,14 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${auction.title}"></h5>
                     <p class="card-text" th:text="${auction.description}"></p>
+                    <a th:href="@{/home/auction/__${auction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<div class="container">
+<div class="container" th:if="${!newAuctions.isEmpty()}">
     <p class="h3">Nowe Aukcje</p>
     <div class="row row-cols-5 row-cols-md-5 g-4">
         <div class="col" th:each="auction : ${newAuctions}">
@@ -156,6 +159,7 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${auction.title}"></h5>
                     <p class="card-text" th:text="${auction.description}"></p>
+                    <a th:href="@{/home/auction/__${auction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
                 </div>
                 <div class="card-footer">
                     <small class="text-muted" th:text="${auction.dateOfIssue}"></small>
@@ -165,7 +169,7 @@
     </div>
 </div>
 
-<div class="container">
+<div class="container" th:if="${!endingAuctions.isEmpty()}">
     <p class="h3">Kończące się aukcje</p>
     <div class="row row-cols-5 row-cols-md-5 g-4">
         <div class="col" th:each="auction : ${endingAuctions}">
@@ -174,6 +178,7 @@
                 <div class="card-body">
                     <h5 class="card-title" th:text="${auction.title}"></h5>
                     <p class="card-text" th:text="${auction.description}"></p>
+                    <a th:href="@{/home/auction/__${auction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
                 </div>
                 <div class="card-footer">
                     <small class="text-muted" th:text="${auction.endDate}"></small>

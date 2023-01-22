@@ -1,6 +1,7 @@
 package com.example.serwisaukcyjny.model.services;
 
 import com.example.serwisaukcyjny.model.Auction;
+import com.example.serwisaukcyjny.model.Observer;
 import com.example.serwisaukcyjny.model.Purchase;
 import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.PurchaseRepository;
@@ -8,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -17,8 +19,11 @@ public class PurchaseService {
 
     private final PurchaseRepository repository;
 
+    private final ObserverService observerService;
 
     public Purchase save(Purchase purchase) {
+        Iterable<Observer> observers = observerService.findAll();
+        observers.forEach(observer -> observer.getAuctions().remove(purchase.getAuction()));
         return repository.save(purchase);
     }
 
@@ -28,5 +33,13 @@ public class PurchaseService {
 
     public List<Purchase> findAll() {
         return (List<Purchase>) repository.findAll();
+    }
+
+    public Optional<Purchase> findByAuction(Auction auction) {
+        return repository.findByAuction(auction);
+    }
+
+    public boolean existByAuction(Auction auction) {
+        return repository.existsByAuction(auction);
     }
 }

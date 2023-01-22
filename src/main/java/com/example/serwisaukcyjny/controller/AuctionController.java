@@ -9,6 +9,7 @@ import com.example.serwisaukcyjny.model.Category;
 import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.services.AuctionService;
+import com.example.serwisaukcyjny.model.services.BiddingService;
 import com.example.serwisaukcyjny.model.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -159,6 +160,7 @@ public class AuctionController {
         map.addAttribute("myAuctions", auctionService.findAllByUser(loggedUser));
         map.addAttribute("boughtAuctions", auctionService.findAllPurchasedAuctionsByUser(loggedUser));
         map.addAttribute("followedAuctions", auctionService.findFollowedAuctions(loggedUser));
+        map.addAttribute("biddedAuctions", auctionService.findAllBiddingAuctionsByUser(loggedUser));
         map.addAttribute("categories", categoryRepository.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);

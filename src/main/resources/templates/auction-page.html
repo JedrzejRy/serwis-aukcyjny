@@ -96,7 +96,7 @@
         </form>
     </div>
     <div class="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start"
-         th:if="!${auction.user == loggedUser || isFollowed}">
+         th:if="!${auction.user == loggedUser || isFollowed || isBought}">
         <form method="post"
               th:action="@{/home/auction/follow/__${auction.getAuctionId()}__}">
             <button class="btn btn-primary btn-lg px-4 me-sm-3" type="submit">
