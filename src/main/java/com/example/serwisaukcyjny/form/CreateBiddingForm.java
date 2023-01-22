@@ -3,6 +3,7 @@ package com.example.serwisaukcyjny.form;
 
 import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.User;
+import jakarta.validation.constraints.Positive;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -16,7 +17,7 @@ public class CreateBiddingForm {
 
     private User user;
     private Auction auction;
-    private BigDecimal price;
+    private int price;
 
 
 }

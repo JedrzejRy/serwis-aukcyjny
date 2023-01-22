@@ -18,11 +18,18 @@ public class BiddingService {
 
     private final BiddigRepository repository;
 
-    public Bidding save(Bidding bidding) {
-        return repository.save(bidding);
+    public Bidding save(Bidding bidding, User loggedUser, Auction auction) {
+
+        if (repository.existsByAuctionAndUser(auction, loggedUser)) {
+            Bidding userBidding = repository.findByAuctionAndUser(auction, loggedUser);
+            userBidding.setPrice(bidding.getPrice());
+            return repository.save(userBidding);
+        } else {
+            return repository.save(bidding);
+        }
     }
 
-    public List<Bidding> findAllByUser(User user){
+    public List<Bidding> findAllByUser(User user) {
         return repository.findAllByUser(user);
     }
 
@@ -30,22 +37,29 @@ public class BiddingService {
         return repository.findAll();
     }
 
-    public Optional<Bidding> findHighestAuctionBidder(Auction auction){
-        if (!repository.findAllByAuctionOrderByPrice(auction).isEmpty()){
+    public Optional<Bidding> findHighestAuctionBidder(Auction auction) {
+        if (!repository.findAllByAuctionOrderByPrice(auction).isEmpty()) {
             return Optional.of(repository.findAllByAuctionOrderByPrice(auction).get(0));
-        }
-        else{
-          return Optional.empty();
+        } else {
+            return Optional.empty();
         }
     }
 
-    public List<Bidding> findAllByAuction(Auction auction){
+    public List<Bidding> findAllByAuction(Auction auction) {
         return repository.findAllByAuction(auction);
     }
 
 
-    public void deleteAllByAuction(Auction auction){
+    public void deleteAllByAuction(Auction auction) {
         repository.deleteAllByAuction(auction);
+    }
+
+    public boolean existsByAuctionAndUser(Auction auction, User user) {
+        return repository.existsByAuctionAndUser(auction, user);
+    }
+
+    public Bidding findByAuctionAndUser(Auction auction, User user) {
+        return repository.findByAuctionAndUser(auction, user);
     }
 
 
