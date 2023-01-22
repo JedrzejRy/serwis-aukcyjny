@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.stream.Collectors;
 
 @Controller
 @RequiredArgsConstructor
@@ -30,16 +31,16 @@ public class HomeController {
     public String categoriesList(ModelMap map, Principal principal) {
         map.addAttribute("categories", categoryRepository.findAll());
         Authentication authentication = authenticationFacade.getAuthentication();
-        map.addAttribute("purchasedAuctions", auctionService.findAllPurchasedAuctions());
+        map.addAttribute("purchasedAuctions", auctionService.findAllPurchasedAuctions().stream().limit(10).collect(Collectors.toList()));
         map.addAttribute("newAuctions", auctionService.findTenNewAuctions());
         map.addAttribute("endingAuctions", auctionService.findTenEndingAuctions());
 
         if (!(authentication instanceof AnonymousAuthenticationToken)) {
             User loggedUser = userService.findByLogin(principal.getName()).get();
             map.addAttribute("loggedUser", loggedUser);
-            map.addAttribute("userAuctions", auctionService.findAllOpenAuctionsByUser(loggedUser));
-            map.addAttribute("followedAuctions", auctionService.findFollowedAuctions(loggedUser));
-            map.addAttribute("biddingAuctions", auctionService.findAllBiddingAuctionsByUser(loggedUser));
+            map.addAttribute("userAuctions", auctionService.findAllOpenAuctionsByUser(loggedUser).stream().limit(10).collect(Collectors.toList()));
+            map.addAttribute("followedAuctions", auctionService.findFollowedAuctions(loggedUser).stream().limit(10).collect(Collectors.toList()));
+            map.addAttribute("biddingAuctions", auctionService.findAllBiddingAuctionsByUser(loggedUser).stream().limit(10).collect(Collectors.toList()));
         }
 
         return "home";
