@@ -68,6 +68,7 @@ public class UserController {
     @GetMapping("/userList")
     public String userList(ModelMap map, @ModelAttribute("message") String message) {
         map.addAttribute("users", userService.findAll());
+        map.addAttribute("categories", categoryRepository.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
         }

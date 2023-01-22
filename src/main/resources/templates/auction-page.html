@@ -1,14 +1,15 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
 <head>
     <meta charset="UTF-8">
-    <title>Lista aukcji</title>
+    <title>Home</title>
     <link rel="stylesheet" href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/home">Serwis Aukcyjny</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -34,16 +35,69 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/home/register">Rejestracja</a>
-                </li>
-                <li class="nav-item">
                     <a class="nav-link" href="/home/auction">Nowa aukcja</a>
                 </li>
             </ul>
-            <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button class="btn btn-outline-success" type="submit">Szukaj</button>
-            </form>
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <div sec:authorize="!isAuthenticated()">
+                        <a href="/login" class="btn btn-light btn-small navbar-btn">Logowanie</a>
+                    </div>
+                </li>
+                <li>
+                    <div class="btn-nav" sec:authorize="!isAuthenticated()">
+                        <a class="btn btn-primary btn-small navbar-btn" href="/home/register">Rejestracja</a>
+                    </div>
+                </li>
+                <div class="dropdown"
+                     sec:authorize="isAuthenticated()">
+                    <a aria-expanded="false"
+                       aria-haspopup="true"
+                       class="nav-link dropdown-toggle text-white"
+                       data-bs-toggle="dropdown"
+                       href="#"
+                       id="profileDropdown"
+                       role="button">
+                        <span sec:authentication="name">[USERNAME]</span>
+                    </a>
+                    <ul aria-labelledby="profileDropdown"
+                        class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/home/auction/user-page-view}">
+                                Mój profil
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/home/auction/my-auctions}">
+                                Moje Aukcje
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/home/auction/followed}">
+                                Obserwowane
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item"
+                               th:href="@{/home/auction/purchased}">
+                                Kupione Aukcje
+                            </a>
+                        </li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li>
+                            <a class="dropdown-item text-danger fw-semibold"
+                               th:href="@{/perform-log-out}">
+                                Wyloguj
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </ul>
         </div>
     </div>
 </nav>
@@ -86,7 +140,7 @@
                         th:text="${#strings.concat(auction.minimumPrice,'PLN' , ' - ', 'Aktualna licytacja')}"></h4>
                     <p class=" text-break lead fw-normal text-white-50 mb-4" th:text="${auction.description}"></p>
                 </div>
-                <div class="d-grid gap-3 d-sm-flex" >
+                <div class="d-grid gap-3 d-sm-flex">
                     <div class="justify-content-sm-start justify-content-xl-start"
                          th:if="!${auction.user == loggedUser || isBought}">
                         <form method="post"

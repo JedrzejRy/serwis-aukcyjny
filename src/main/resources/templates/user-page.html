@@ -9,7 +9,7 @@
     <script src="/webjars/bootstrap/5.2.3/js/bootstrap.min.js"></script>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg bg-light">
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/home">Serwis Aukcyjny</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -53,7 +53,7 @@
                      sec:authorize="isAuthenticated()">
                     <a aria-expanded="false"
                        aria-haspopup="true"
-                       class="nav-link dropdown-toggle text-black"
+                       class="nav-link dropdown-toggle text-white"
                        data-bs-toggle="dropdown"
                        href="#"
                        id="profileDropdown"
@@ -64,7 +64,7 @@
                         class="dropdown-menu dropdown-menu-end">
                         <li>
                             <a class="dropdown-item"
-                               th:href="@{/profile}">
+                               th:href="@{/home/auction/user-page-view}">
                                 Mój profil
                             </a>
                         </li>
@@ -151,8 +151,10 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${myAuction.title}"></h5>
                                 <p class="card-text" th:text="${myAuction.description}">.</p>
-                                <a th:href="@{/home/auction/__${myAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
-                                <a th:href="@{/home/auction/delete/__${myAuction.getAuctionId()}__}" class="btn btn-danger">Usuń aukcje</a>
+                                <a th:href="@{/home/auction/__${myAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz
+                                    do aukcji</a>
+                                <a th:href="@{/home/auction/delete/__${myAuction.getAuctionId()}__}"
+                                   class="btn btn-danger">Usuń aukcje</a>
                             </div>
                             <div class="card-footer">
                                 <small class="text-muted" th:text="${myAuction.endDate}"></small>
@@ -171,7 +173,8 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${myAuction.title}"></h5>
                                 <p class="card-text" th:text="${myAuction.description}">.</p>
-                                <a th:href="@{/home/auction/__${myAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
+                                <a th:href="@{/home/auction/__${myAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz
+                                    do aukcji</a>
                             </div>
                             <div class="card-footer">
                                 <small class="text-muted" th:text="${myAuction.endDate}"></small>
@@ -190,7 +193,8 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${boughtAuction.title}"></h5>
                                 <p class="card-text" th:text="${boughtAuction.description}">.</p>
-                                <a th:href="@{/home/auction/__${boughtAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
+                                <a th:href="@{/home/auction/__${boughtAuction.getAuctionId()}__}"
+                                   class="btn btn-primary">Przejdz do aukcji</a>
 
                             </div>
                             <div class="card-footer">
@@ -211,10 +215,11 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${bidAuction.title}"></h5>
                                 <p class="card-text" th:text="${bidAuction.description}">.</p>
-                                <a th:href="@{/home/auction/__${bidAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
+                                <a th:href="@{/home/auction/__${bidAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz
+                                    do aukcji</a>
                             </div>
                             <div class="card-footer">
-                                <small class="text-muted" th:text="${bidAuction.endDate.getDayOfWeek()}"></small>
+                                <small class="text-muted" th:text="${bidAuction.endDate}"></small>
                             </div>
                         </div>
                     </div>
@@ -230,7 +235,8 @@
                             <div class="card-body">
                                 <h5 class="card-title" th:text="${followedAuction.title}"></h5>
                                 <p class="card-text" th:text="${followedAuction.description}">.</p>
-                                <a th:href="@{/home/auction/__${followedAuction.getAuctionId()}__}" class="btn btn-primary">Przejdz do aukcji</a>
+                                <a th:href="@{/home/auction/__${followedAuction.getAuctionId()}__}"
+                                   class="btn btn-primary">Przejdz do aukcji</a>
 
                             </div>
                             <div class="card-footer">
