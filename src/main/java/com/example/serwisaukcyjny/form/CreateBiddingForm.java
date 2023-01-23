@@ -14,11 +14,8 @@ import lombok.ToString;
 @ToString
 public class CreateBiddingForm {
 
-    @NotBlank
     private User user;
-    @NotBlank
     private Auction auction;
-    @Positive
     private int price;
 
 

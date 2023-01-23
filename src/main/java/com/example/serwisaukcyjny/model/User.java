@@ -28,7 +28,6 @@ public class User {
 
     private String login;
     @Column
-
     private String userName;
 
     private String password;
