@@ -2,8 +2,8 @@ package com.example.serwisaukcyjny.controller;
 
 import com.example.serwisaukcyjny.authentication.IAuthenticationFacade;
 import com.example.serwisaukcyjny.model.User;
-import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.services.AuctionService;
+import com.example.serwisaukcyjny.model.services.CategoryService;
 import com.example.serwisaukcyjny.model.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/home")
 public class HomeController {
 
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
     private final AuctionService auctionService;
     private final UserService userService;
     private final IAuthenticationFacade authenticationFacade;
@@ -29,7 +29,7 @@ public class HomeController {
 
     @GetMapping
     public String categoriesList(ModelMap map, Principal principal) {
-        map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("categories", categoryService.findAll());
         Authentication authentication = authenticationFacade.getAuthentication();
         map.addAttribute("purchasedAuctions", auctionService.findAllPurchasedAuctions().stream().limit(10).collect(Collectors.toList()));
         map.addAttribute("newAuctions", auctionService.findTenNewAuctions());

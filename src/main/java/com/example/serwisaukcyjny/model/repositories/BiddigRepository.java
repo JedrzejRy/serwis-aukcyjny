@@ -2,7 +2,6 @@ package com.example.serwisaukcyjny.model.repositories;
 
 import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.Bidding;
-import com.example.serwisaukcyjny.model.Observer;
 import com.example.serwisaukcyjny.model.User;
 import org.springframework.data.repository.CrudRepository;
 

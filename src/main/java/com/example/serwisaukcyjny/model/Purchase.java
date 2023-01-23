@@ -6,7 +6,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.ToString;
-import org.hibernate.validator.constraints.UniqueElements;
 
 import java.math.BigDecimal;
 
