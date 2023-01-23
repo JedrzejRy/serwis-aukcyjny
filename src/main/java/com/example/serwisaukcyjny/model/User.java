@@ -34,8 +34,6 @@ public class User {
     private String password;
 
     private LocalDateTime startDate;
-    //  @Column
-    //  private ImageIO logo;
 
     @Enumerated(EnumType.STRING)
     private Role role;

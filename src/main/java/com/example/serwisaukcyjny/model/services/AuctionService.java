@@ -3,18 +3,12 @@ package com.example.serwisaukcyjny.model.services;
 import com.example.serwisaukcyjny.model.*;
 import com.example.serwisaukcyjny.model.Observer;
 import com.example.serwisaukcyjny.model.repositories.AuctionRepository;
-import com.example.serwisaukcyjny.model.repositories.UserRepository;
-import jakarta.persistence.FetchType;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.java.Log;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.annotations.Fetch;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -54,10 +48,6 @@ public class AuctionService {
         return false;
     }
 
-    public void deleteEndedAuction(Auction auction) {
-        auctionRepository.delete(auction);
-    }
-
     public boolean isBidded(long id) {
         List<Bidding> biddings = biddingService.findAll();
         Auction auction = auctionRepository.findById(id).get();
@@ -67,10 +57,6 @@ public class AuctionService {
 
     public Auction findByID(Long id) {
         return auctionRepository.findById(id).orElseThrow(() -> new RuntimeException("Auction with id " + id + " not found!"));
-    }
-
-    public List<Auction> findAllByCategory(Category category) {
-        return auctionRepository.findAllByCategory(category);
     }
 
     public List<Auction> findAllOpenAuctionsByCategory(Category category) {

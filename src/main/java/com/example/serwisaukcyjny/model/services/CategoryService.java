@@ -1,10 +1,8 @@
 package com.example.serwisaukcyjny.model.services;
 
-import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.Category;
 import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

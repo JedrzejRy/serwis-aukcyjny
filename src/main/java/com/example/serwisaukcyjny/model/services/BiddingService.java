@@ -7,10 +7,8 @@ import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.BiddigRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -45,14 +43,6 @@ public class BiddingService {
 
     public void deleteAllByAuction(Auction auction) {
         repository.deleteAllByAuction(auction);
-    }
-
-    public boolean existsByAuctionAndUser(Auction auction, User user) {
-        return repository.existsByAuctionAndUser(auction, user);
-    }
-
-    public Bidding findByAuctionAndUser(Auction auction, User user) {
-        return repository.findByAuctionAndUser(auction, user);
     }
 
 

@@ -11,8 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 @RequiredArgsConstructor
@@ -38,10 +36,6 @@ public class PurchaseService {
 
     public List<Purchase> findAll() {
         return (List<Purchase>) repository.findAll();
-    }
-
-    public Optional<Purchase> findByAuction(Auction auction) {
-        return repository.findByAuction(auction);
     }
 
     public boolean existByAuction(Auction auction) {

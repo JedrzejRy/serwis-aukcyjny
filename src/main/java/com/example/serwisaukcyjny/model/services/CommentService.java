@@ -1,6 +1,5 @@
 package com.example.serwisaukcyjny.model.services;
 
-import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.Comment;
 import com.example.serwisaukcyjny.model.repositories.CommentRepository;
 import lombok.RequiredArgsConstructor;

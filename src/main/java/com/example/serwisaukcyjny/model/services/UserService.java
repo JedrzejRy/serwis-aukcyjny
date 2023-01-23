@@ -1,9 +1,7 @@
 package com.example.serwisaukcyjny.model.services;
 
-import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.User;
 import com.example.serwisaukcyjny.model.repositories.UserRepository;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -26,16 +24,6 @@ public class UserService {
 
     public List<User> findAll() {
         return new ArrayList<>(userRepository.findAll());
-    }
-
-    public Optional<User> findById(Long id) {
-        return userRepository.findById(id);
-    }
-
-    public Optional<User> findByUserName(String userName) {
-
-        return userRepository.findByUserName(userName);
-
     }
 
     public Optional<User> findByLogin(String login) {

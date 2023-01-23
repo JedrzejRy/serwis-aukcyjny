@@ -7,9 +7,8 @@ import com.example.serwisaukcyjny.mapper.AuctionMapper;
 import com.example.serwisaukcyjny.model.Auction;
 import com.example.serwisaukcyjny.model.Category;
 import com.example.serwisaukcyjny.model.User;
-import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
 import com.example.serwisaukcyjny.model.services.AuctionService;
-import com.example.serwisaukcyjny.model.services.BiddingService;
+import com.example.serwisaukcyjny.model.services.CategoryService;
 import com.example.serwisaukcyjny.model.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,16 +17,11 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.util.List;
 import java.util.Set;
@@ -39,14 +33,14 @@ import java.util.Set;
 public class AuctionController {
 
     private final AuctionService auctionService;
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
     private final UserService userService;
     private final IAuthenticationFacade authenticationFacade;
 
     @GetMapping
     public String create(ModelMap map) {
         map.addAttribute("auction", new CreateAuctionForm());
-        map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("categories", categoryService.findAll());
         return "creator";
     }
 
@@ -54,7 +48,7 @@ public class AuctionController {
     public String handleCreate(@ModelAttribute("auction") @Valid CreateAuctionForm form, Errors errors, RedirectAttributes redirectAttributes, ModelMap map, Principal principal, @RequestParam("image") MultipartFile multipartFile) throws IOException {
 
         if (errors.hasErrors()) {
-            map.addAttribute("categories", categoryRepository.findAll());
+            map.addAttribute("categories", categoryService.findAll());
             return "creator";
         }
 
@@ -78,7 +72,7 @@ public class AuctionController {
     @GetMapping("/list")
     public String list(ModelMap map, @ModelAttribute("message") String message) {
         map.addAttribute("auctions", auctionService.findAllOpenAuctions());
-        map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("categories", categoryService.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
         }
@@ -88,9 +82,9 @@ public class AuctionController {
 
     @GetMapping("/list/{id}")
     public String auctionByCategoryList(@PathVariable int id, ModelMap map, @ModelAttribute("message") String message) {
-        List<Category> categoryList = (List<Category>) categoryRepository.findAll();
+        List<Category> categoryList = (List<Category>) categoryService.findAll();
         map.addAttribute("auctions", auctionService.findAllOpenAuctionsByCategory(categoryList.get(id - 1)));
-        map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("categories", categoryService.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
         }
@@ -110,7 +104,7 @@ public class AuctionController {
         }
         map.addAttribute("bidding", new CreateBiddingForm());
         map.addAttribute("auction", auctionService.findByID(id));
-        map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("categories", categoryService.findAll());
         map.addAttribute("isBought", auctionService.isAlreadyBought(id));
         if (!message.isBlank()) {
             map.addAttribute("message", message);
@@ -123,7 +117,7 @@ public class AuctionController {
         User loggedUser = userService.findByLogin(principal.getName()).get();
         List<Auction> auctions = auctionService.findAllPurchasedAuctionsByUser(loggedUser);
         map.addAttribute("auctions", auctions);
-        map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("categories", categoryService.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
         }
@@ -135,7 +129,7 @@ public class AuctionController {
         User loggedUser = userService.findByLogin(principal.getName()).get();
         List<Auction> auctions = auctionService.findAllByUser(loggedUser);
         map.addAttribute("auctions", auctions);
-        map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("categories", categoryService.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
         }
@@ -147,7 +141,7 @@ public class AuctionController {
         User loggedUser = userService.findByLogin(principal.getName()).get();
         Set<Auction> auctions = auctionService.findFollowedAuctions(loggedUser);
         map.addAttribute("auctions", auctions);
-        map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("categories", categoryService.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
         }
@@ -163,7 +157,7 @@ public class AuctionController {
         map.addAttribute("boughtAuctions", auctionService.findAllPurchasedAuctionsByUser(loggedUser));
         map.addAttribute("followedAuctions", auctionService.findFollowedAuctions(loggedUser));
         map.addAttribute("biddedAuctions", auctionService.findAllBiddingAuctionsByUser(loggedUser));
-        map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("categories", categoryService.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
         }

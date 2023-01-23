@@ -1,6 +1,5 @@
 package com.example.serwisaukcyjny.controller;
 
-import com.example.serwisaukcyjny.form.CreateAuctionForm;
 import com.example.serwisaukcyjny.form.CreateLocalizationForm;
 import com.example.serwisaukcyjny.form.CreateUserForm;
 import com.example.serwisaukcyjny.mapper.LocalizationMapper;
@@ -8,7 +7,7 @@ import com.example.serwisaukcyjny.mapper.UserMapper;
 import com.example.serwisaukcyjny.model.Role;
 import com.example.serwisaukcyjny.model.Localization;
 import com.example.serwisaukcyjny.model.User;
-import com.example.serwisaukcyjny.model.repositories.CategoryRepository;
+import com.example.serwisaukcyjny.model.services.CategoryService;
 import com.example.serwisaukcyjny.model.services.LocalizationService;
 import com.example.serwisaukcyjny.model.services.UserService;
 import jakarta.validation.Valid;
@@ -17,10 +16,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.security.Principal;
+
+import static org.springframework.http.HttpStatus.FORBIDDEN;
 
 @Controller
 @Slf4j
@@ -31,7 +34,7 @@ public class UserController {
     private static final String MESSAGE_KEY = "message";
     private final UserService userService;
     private final LocalizationService localizationService;
-    private final CategoryRepository categoryRepository;
+    private final CategoryService categoryService;
 
 
 
@@ -41,7 +44,7 @@ public class UserController {
         map.addAttribute("roles", Role.values());
         map.addAttribute("localization", new CreateLocalizationForm());
         map.addAttribute("voivodeships", Localization.Voivodeship.values());
-        map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("categories", categoryService.findAll());
 
         return "registered";
     }
@@ -68,7 +71,7 @@ public class UserController {
     @GetMapping("/userList")
     public String userList(ModelMap map, @ModelAttribute("message") String message) {
         map.addAttribute("users", userService.findAll());
-        map.addAttribute("categories", categoryRepository.findAll());
+        map.addAttribute("categories", categoryService.findAll());
         if (!message.isBlank()) {
             map.addAttribute("message", message);
         }
