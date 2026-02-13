@@ -17,7 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
+//Final
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig {
@@ -47,7 +47,7 @@ public class WebSecurityConfig {
     }
 
     @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder()e {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 }
